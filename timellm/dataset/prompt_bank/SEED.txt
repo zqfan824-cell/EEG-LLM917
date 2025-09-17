@@ -1,0 +1,5 @@
+Dataset Description:
+The SEED dataset contains EEG signals recorded during emotion elicitation experiments.
+Participants watched film clips designed to induce positive, neutral, and negative emotions.
+The EEG signals are recorded using 62 channels at 200Hz sampling rate.
+This dataset is used for three-class emotion recognition.

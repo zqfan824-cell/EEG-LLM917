@@ -1,0 +1,96 @@
+Dataset Description:
+The DEAP dataset contains 32-channel EEG signals recorded from participants experiencing emotional stimuli through music videos. Participants rated each video on continuous scales of valence (negative to positive) and arousal (calm to excited).
+
+Task Instruction:
+This is a binary emotion classification task. Analyze the EEG signal patterns to determine whether the participant is experiencing positive (high valence) or negative (low valence) emotional states.
+
+EEG Channel Configuration:
+- 32 channels following the International 10-20 system
+- Frontal channels (Fp1, Fp2, F3, F4, F7, F8, Fz): Associated with emotional processing and executive control
+- Central channels (C3, C4, Cz): Related to sensorimotor integration
+- Parietal channels (P3, P4, P7, P8, Pz): Involved in attention and spatial processing
+- Occipital channels (O1, O2): Visual processing areas
+- Temporal channels (T7, T8): Auditory and memory processing
+
+Emotion-Related EEG Patterns:
+Positive Emotions (High Valence):
+- Increased left frontal alpha power (8-13 Hz) relative to right frontal
+- Enhanced gamma band activity (30-45 Hz) in frontal regions
+- Higher beta power (13-30 Hz) indicating active cognitive engagement
+- Frontal alpha asymmetry index: {frontal_alpha_asymmetry}
+- Greater coherence between frontal and parietal regions
+
+Negative Emotions (Low Valence):
+- Increased right frontal alpha activity
+- Reduced overall gamma power
+- Enhanced theta activity (4-8 Hz) in frontal and central regions
+- Lower beta/alpha ratio
+- Increased delta power (0.5-4 Hz) in some cases
+
+Key Features to Analyze:
+- Power spectral density in each frequency band: {psd_features}
+- Frontal asymmetry patterns: {asymmetry_features}
+- Inter-channel coherence: {coherence_features}
+- Temporal dynamics and transitions
+- Signal complexity and entropy: {entropy_features}
+
+Input Format:
+- Sampling rate: 128 Hz
+- Sequence length: {seq_len} samples
+- Each sample represents multi-channel EEG measurements at a specific time point
+
+SEED prompt：
+Dataset Description:
+The SEED dataset contains 62-channel EEG signals recorded during emotion elicitation using carefully selected film clips. The dataset targets three distinct emotional states: positive (happiness), neutral, and negative (sadness/fear).
+
+Task Instruction:
+This is a three-class emotion classification task. Analyze the comprehensive EEG signal patterns to classify the participant's emotional state into one of three categories: positive, neutral, or negative.
+
+EEG Channel Configuration:
+- 62 channels with extended 10-20 montage providing high spatial resolution
+- Prefrontal channels (Fp1, Fp2, AFz, AF3, AF4): Executive control and emotion regulation
+- Frontal channels (F1-F8, Fz, FCz): Emotional processing and motor planning
+- Central channels (C1-C6, Cz, CPz): Sensorimotor integration
+- Parietal channels (P1-P8, Pz, POz): Attention and spatial awareness
+- Occipital channels (O1, O2, Oz): Visual processing
+- Temporal channels (T7, T8, TP7, TP8, FT7, FT8): Auditory and memory
+
+Emotion-Specific EEG Signatures:
+Positive Emotions (Happiness):
+- Significantly increased gamma power (30-50 Hz) in left temporal and frontal regions
+- Enhanced beta activity (14-30 Hz) across frontal cortex
+- Characteristic frontal alpha asymmetry (left < right)
+- High-frequency oscillations in temporal-parietal networks
+- Increased connectivity between frontal and temporal regions: {frontal_temporal_connectivity}
+- Gamma band power ratio: {gamma_power_ratio}
+
+Neutral State:
+- Balanced alpha power (8-13 Hz) between hemispheres
+- Moderate beta activity without significant lateralization
+- Lower gamma power compared to emotional states
+- Stable theta rhythms (4-8 Hz) in frontal-central areas
+- Reduced long-range connectivity
+- Alpha symmetry index: {alpha_symmetry_index}
+
+Negative Emotions (Sadness/Fear):
+- Increased right frontal and temporal alpha power
+- Enhanced theta activity in frontal and central regions
+- Reduced gamma power, especially in left hemisphere
+- Increased delta power (1-4 Hz) in frontal areas
+- Greater alpha-theta coupling
+- Heightened connectivity in right hemisphere networks
+- Theta/beta ratio: {theta_beta_ratio}
+
+Critical Analysis Points:
+- Differential entropy features across bands: {de_features}
+- Hemispheric power asymmetry: {hemispheric_asymmetry}
+- Phase-locking values between regions: {plv_features}
+- Spectral power distribution: {spectral_distribution}
+- Temporal evolution of emotional patterns
+- Cross-frequency coupling: {cfc_features}
+
+Input Format:
+- Sampling rate: 200 Hz (downsampled from 1000 Hz)
+- Sequence length: {seq_len} samples
+- Higher sampling rate captures fast gamma oscillations
+- Each time point contains 62-channel simultaneous recordings
