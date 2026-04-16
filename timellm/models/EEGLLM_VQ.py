@@ -142,18 +142,21 @@ class EEGLLM_VQ(EEGLLMBase):
             self.vq_to_model = nn.Linear(self.vq_embed_dim, configs.d_model)
         
         if self.reconstruction_enabled:
-            # 重建解码器 - 输出到原始序列长度和通道数
-            # 注意：实际通道数会在运行时动态更新，这里使用占位符
+            # 重建解码器 - 在 __init__ 里按 configs.seq_len 一次性定尺寸
+            # FFT 频域只取前一半频率分量，所以 freq_dim = seq_len // 2
+            freq_dim = configs.seq_len // 2
+            raw_dim = configs.seq_len
+
             self.freq_decoder = nn.Sequential(
-                nn.Linear(self.vq_embed_dim, 256),
+                nn.Linear(self.vq_embed_dim, self.vq_embed_dim),
                 nn.Tanh(),
-                nn.Linear(256, 256)  # 先输出固定大小，后续动态调整
+                nn.Linear(self.vq_embed_dim, freq_dim),
             )
 
             self.raw_decoder = nn.Sequential(
-                nn.Linear(self.vq_embed_dim, 256),
+                nn.Linear(self.vq_embed_dim, self.vq_embed_dim),
                 nn.Tanh(),
-                nn.Linear(256, 512)  # 先输出固定大小，后续动态调整
+                nn.Linear(self.vq_embed_dim, raw_dim),
             )
             
             # 重建损失函数
@@ -229,142 +232,62 @@ class EEGLLM_VQ(EEGLLMBase):
         增强版前向传播，支持VQ和重建损失
 
         Args:
-            x_enc: (batch_size, n_channels, seq_len) - 输入EEG数据
+            x_enc: (batch_size, seq_len, n_channels) - 输入EEG数据（与数据加载器、基类 EEGLLM 一致）
             x_mark_enc: 时间标记
             alpha: 域对抗学习的alpha参数
             return_reconstruction_loss: 是否返回重建损失
         """
+        B, seq_len, N = x_enc.shape
 
-        # 数据加载器返回 (B, seq_len, n_channels)，需要转置为 (B, n_channels, seq_len)
-        if x_enc.shape[1] > x_enc.shape[2]:  # seq_len > n_channels
-            x_enc = x_enc.transpose(1, 2)  # (B, n_channels, seq_len)
-
-        # 保存原始输入用于重建损失计算
-        x_enc_original = x_enc.clone()  # (B, n_channels, seq_len)
-
-        # 获取基本维度信息
-        B = x_enc.shape[0]  # batch_size
-        N = x_enc.shape[1]  # n_channels
-        seq_len = x_enc.shape[2]  # sequence length
-
-
-
-        # 1. 数据标准化
+        # 1. RevIN 标准化（末轴 = channel，与 Normalize(configs.enc_in, ...) 构造一致）
         if self.normalize_layers is not None:
             x_enc = self.normalize_layers(x_enc, 'norm')
 
-        # 2. Patch Embedding
-        x_enc = x_enc.permute(0, 2, 1).contiguous()  # (B, seq_len, N)
-        enc_out, n_vars = self.patch_embedding(x_enc.float())  # (B, patch_nums, d_model)
-        patch_nums = enc_out.shape[1]  # patch数量
+        # 2. 单次转置得到 (B, N, seq_len)，既作为 FFT 重建目标，也作为 PatchEmbedding 输入
+        x_enc = x_enc.permute(0, 2, 1).contiguous()
+        x_enc_original = x_enc.clone()  # (B, N, seq_len)
 
-        # enc_out 已经是 (B, patch_nums, d_model) 格式
-        enc_out_reshaped = enc_out
-        
-        # 3. VQ编码和量化
+        # PatchEmbedding 契约要求 (B, N, T)，输出 (B*N, num_patches, d_model)
+        enc_out, n_vars = self.patch_embedding(x_enc.float())
+        num_patches = enc_out.shape[1]
+
+        # 3. VQ 编码和量化（输入输出均保持 (B*N, num_patches, *) 形状）
         vq_loss = 0
-        quantized_features = enc_out_reshaped
-        
+        quantized_features = enc_out
+
         if self.vq_enabled:
-            # 映射到VQ空间
-            vq_features = self.vq_encoder(enc_out_reshaped)  # (B, L, vq_embed_dim)
-            
-            # Vector Quantization
+            vq_features = self.vq_encoder(enc_out)  # (B*N, num_patches, vq_embed_dim)
             quantized_features, vq_loss, encoding_indices = self.quantizer(vq_features)
-            
-            # 映射回d_model维度用于重编程
-            quantized_for_reprog = self.vq_to_model(quantized_features)
+            quantized_for_reprog = self.vq_to_model(quantized_features)  # (B*N, num_patches, d_model)
         else:
-            quantized_for_reprog = enc_out_reshaped
+            quantized_for_reprog = enc_out
         
         # 4. 重建损失计算
         reconstruction_loss = 0
         reconstruction_dict = {}
         
         if self.reconstruction_enabled and return_reconstruction_loss and self.vq_enabled:
-            # 基于 NeuroLM 的重建损失实现
-            # 注意：quantized_features 可能有错误的 batch 维度，需要修正
+            # 重建目标（参考 NeuroLM 的 Y_freq / Y_raw）
+            # x_enc_original: (B, N, seq_len) —— FFT 沿时间轴
+            x_enc_fft = torch.fft.fft(x_enc_original, dim=2)
+            freq_target = torch.abs(x_enc_fft)[:, :, :seq_len // 2]  # (B, N, seq_len // 2)
+            raw_target = x_enc_original                               # (B, N, seq_len)
 
-            # 1. 修正 VQ 特征的维度
-            if quantized_features.shape[0] != B:
-                # 重塑 VQ 特征到正确的 batch 维度
-                total_elements = quantized_features.numel()
-                expected_elements = B * patch_nums * self.vq_embed_dim
-                if total_elements == expected_elements:
-                    quantized_features = quantized_features.view(B, patch_nums, self.vq_embed_dim)
-                else:
-                    # 如果元素总数不匹配，使用自适应方法
-                    quantized_features = quantized_features.view(B, -1, quantized_features.shape[-1])
+            # 按通道分组：(B*N, num_patches, vq_embed_dim) → (B, N, vq_embed_dim)
+            quantized_for_recon = quantized_features.view(B, N, num_patches, self.vq_embed_dim)
+            vq_pooled = quantized_for_recon.mean(dim=2)
 
-            # 2. 生成重建目标（类似 NeuroLM 的 Y_freq 和 Y_raw）
-            # 使用原始输入数据 x_enc_original: (B, N, seq_len)
-            # 频域目标：使用 FFT 获取频域表示
-            x_enc_fft = torch.fft.fft(x_enc_original, dim=2)  # (B, N, seq_len)
-            x_enc_freq_mag = torch.abs(x_enc_fft)  # 频域幅度
-            # 取前一半频率分量
-            freq_target = x_enc_freq_mag[:, :, :x_enc_freq_mag.shape[2]//2]  # (B, N, seq_len//2)
-
-            # 时域目标：直接使用原始信号
-            raw_target = x_enc_original  # (B, N, seq_len)
-
-
-
-            # 3. 使用 VQ 特征进行重建预测
-            # 将 quantized_features 投影到重建维度
-            vq_dim = quantized_features.shape[-1]
-            freq_dim = freq_target.shape[2]  # 频域维度
-            raw_dim = raw_target.shape[2]    # 时域维度
-
-            if not hasattr(self, 'freq_decoder') or self.freq_decoder[-1].out_features != freq_dim:
-                # 动态创建或重新创建解码器（类似 NeuroLM 的 decode_task_layer）
-                self.freq_decoder = nn.Sequential(
-                    nn.Linear(vq_dim, vq_dim),
-                    nn.Tanh(),
-                    nn.Linear(vq_dim, freq_dim)  # 输出频域维度
-                ).to(quantized_features.device)
-
-            if not hasattr(self, 'raw_decoder') or self.raw_decoder[-1].out_features != raw_dim:
-                self.raw_decoder = nn.Sequential(
-                    nn.Linear(vq_dim, vq_dim),
-                    nn.Tanh(),
-                    nn.Linear(vq_dim, raw_dim)   # 输出时域维度
-                ).to(quantized_features.device)
-
-            # 4. 解码重建
-            # 将 VQ 特征从 patch 维度池化到通道维度
-            # quantized_features: (B, patch_nums, vq_dim)
-            # 需要池化到 (B, N, vq_dim) 其中 N = x_enc.shape[1]
-
-            # 计算每个通道对应的 patch 数量
-            patches_per_channel = quantized_features.shape[1] // x_enc_original.shape[1]
-            if patches_per_channel * x_enc_original.shape[1] == quantized_features.shape[1]:
-                # 可以整除，直接重塑和平均
-                vq_reshaped = quantized_features.view(B, x_enc_original.shape[1], patches_per_channel, vq_dim)
-                vq_pooled = vq_reshaped.mean(dim=2)  # (B, N, vq_dim)
-            else:
-                # 不能整除，使用自适应池化
-                vq_pooled = F.adaptive_avg_pool1d(
-                    quantized_features.transpose(1, 2), x_enc_original.shape[1]
-                ).transpose(1, 2)  # (B, N, vq_dim)
-
-            # 频域重建
-            freq_pred = self.freq_decoder(vq_pooled)  # (B, N, freq_dim)
-            # 时域重建
+            freq_pred = self.freq_decoder(vq_pooled)  # (B, N, seq_len // 2)
             raw_pred = self.raw_decoder(vq_pooled)    # (B, N, seq_len)
 
-
-
-            # 4. 计算重建损失（类似 NeuroLM 的 calculate_rec_loss）
             freq_loss = F.mse_loss(freq_pred, freq_target)
             raw_loss = F.mse_loss(raw_pred, raw_target)
-
-            # 总重建损失
             reconstruction_loss = freq_loss + raw_loss
 
             reconstruction_dict = {
                 'reconstruction_loss': reconstruction_loss.item(),
                 'freq_loss': freq_loss.item(),
-                'raw_loss': raw_loss.item()
+                'raw_loss': raw_loss.item(),
             }
         
         # 5. 重编程层处理
@@ -385,83 +308,24 @@ class EEGLLM_VQ(EEGLLMBase):
         # 6. LLM处理
         llm_enc_out = self.llm_model(inputs_embeds=prompt).last_hidden_state
 
-        # 7. 增强模态对抗学习（参考NeuroLM的VQ_Align）
+        # 7. 模态对比学习（参考 NeuroLM 的 VQ_Align）
+        #    eeg_features: (B*N, num_patches, d_model)
+        #    llm_enc_out : (B*N, num_patches, d_llm)
+        #    ModalContrastiveLearning 内部分别投影 eeg_dim/llm_dim，允许维度不同
         contrastive_loss = 0
         if hasattr(self, 'modal_contrastive') and self.training:
-            # 获取EEG特征（VQ量化后的特征）
-            eeg_features = quantized_for_reprog  # [B, patch_nums, d_llm]
+            eeg_features = quantized_for_reprog
+            contrastive_loss = self.modal_contrastive(eeg_features, llm_enc_out)
 
-            # 确保LLM特征维度匹配
-            if llm_enc_out.shape[1] != eeg_features.shape[1]:
-                # 自适应池化到相同长度
-                llm_features = F.adaptive_avg_pool1d(
-                    llm_enc_out.transpose(1, 2), eeg_features.shape[1]
-                ).transpose(1, 2)
-            else:
-                llm_features = llm_enc_out
-
-            # 计算模态对比学习损失（内部处理维度对齐）
-            contrastive_loss = self.modal_contrastive(eeg_features, llm_features)
-
-            # 更新域损失（结合对比学习）
             if isinstance(domain_loss, torch.Tensor):
-                domain_loss = domain_loss + 0.1 * contrastive_loss  # 对比学习权重
+                domain_loss = domain_loss + 0.1 * contrastive_loss
             else:
                 domain_loss = 0.1 * contrastive_loss
 
-        # 7. 输出层
+        # 8. 分类头：llm_enc_out 形状为 (B*N, num_patches, d_llm)，按基类模式整形
         if self.task_name == 'classification':
-            # 简化的维度处理：确保输出是 (B, patch_nums, d_llm)
-            current_shape = llm_enc_out.shape
-
-            # 如果维度不匹配，重塑到正确的形状
-            if len(current_shape) == 3:
-                if current_shape[0] == B and current_shape[1] == patch_nums:
-                    # 已经是正确的形状
-                    pass
-                elif current_shape[0] == B * patch_nums:
-                    # 被展平了，重塑回来
-                    llm_enc_out = llm_enc_out.view(B, patch_nums, -1)
-                else:
-                    # 其他情况，使用自适应重塑
-                    llm_enc_out = llm_enc_out.view(B, -1, current_shape[-1])
-                    if llm_enc_out.shape[1] != patch_nums:
-                        # 使用平均池化调整序列长度
-                        llm_enc_out = F.adaptive_avg_pool1d(
-                            llm_enc_out.transpose(1, 2), patch_nums
-                        ).transpose(1, 2)
-            else:
-                # 如果不是3维，强制重塑
-                llm_enc_out = llm_enc_out.view(B, patch_nums, -1)
-
-            # 简化的分类头处理：直接使用平均池化
-            # llm_enc_out: (B, patch_nums, d_llm)
-            # 目标：(B, N, d_llm, patch_nums_per_var)
-
-            # 计算每个通道的平均表示
-            patch_nums_per_var = patch_nums // N
-            if patch_nums_per_var * N == patch_nums:
-                # 可以整除，直接重塑
-                llm_enc_out = llm_enc_out.view(B, N, patch_nums_per_var, self.d_llm)
-                llm_enc_out = llm_enc_out.permute(0, 1, 3, 2)  # (B, N, d_llm, patch_nums_per_var)
-            else:
-                # 不能整除，使用平均池化
-
-
-                # 如果 patch_nums < N，说明patch数量少于通道数，需要特殊处理
-                if patch_nums < N:
-                    # 使用自适应池化扩展到N个通道
-                    llm_enc_out = F.adaptive_avg_pool1d(
-                        llm_enc_out.transpose(1, 2), N
-                    ).transpose(1, 2)  # (B, N, d_llm)
-                    llm_enc_out = llm_enc_out.unsqueeze(-1)  # (B, N, d_llm, 1)
-                else:
-                    # 正常情况：patch_nums >= N
-                    patches_per_channel = patch_nums // N
-                    llm_enc_out = llm_enc_out.view(B, N, patches_per_channel, self.d_llm)
-                    llm_enc_out = llm_enc_out.permute(0, 1, 3, 2)  # (B, N, d_llm, patches_per_channel)
-
-
+            llm_enc_out = llm_enc_out.reshape(B, N, num_patches, self.d_llm)
+            llm_enc_out = llm_enc_out.permute(0, 1, 3, 2).contiguous()  # (B, N, d_llm, num_patches)
             output = self.output_projection(llm_enc_out)
         else:
             output = self.output_projection(llm_enc_out)

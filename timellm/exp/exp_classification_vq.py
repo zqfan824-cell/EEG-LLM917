@@ -17,6 +17,7 @@ from utils.reconstruction_losses import AdaptiveLossWeighter
 from utils.tools import EarlyStopping, adjust_learning_rate
 from utils.metrics_classification import compute_batch_metrics
 from utils.loss_classification import create_loss_function
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 warnings.filterwarnings('ignore')
 
@@ -361,7 +362,11 @@ class Exp_Classification_VQ:
         print('test shape:', preds.shape, trues.shape)
         
         # 计算指标
-        accuracy, precision, recall, f1 = metric(preds, trues)
+        pred_labels = preds.argmax(axis=1) if preds.ndim > 1 else preds
+        accuracy = accuracy_score(trues, pred_labels)
+        precision = precision_score(trues, pred_labels, average='weighted', zero_division=0)
+        recall = recall_score(trues, pred_labels, average='weighted', zero_division=0)
+        f1 = f1_score(trues, pred_labels, average='weighted', zero_division=0)
         print(f'Test Accuracy: {accuracy:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}, F1: {f1:.4f}')
         
         # 保存结果

@@ -156,29 +156,6 @@ bash run_deap_vq.sh
 
 ---
 
-## 已知问题
-
-项目整理时发现以下几个**尚未修复**的潜在问题，供日后回来处理：
-
-1. **VQ 模型的重建目标维度可能对不齐**
-   `EEGLLM_VQ.py` 第 300–308 行：输入按 `(B, N, seq_len)` 处理 FFT，但上游 Patch 嵌入之前的张量形状是 `(B, seq_len, N)`，频域目标的通道维可能错位。
-
-2. **VQ 特征维度补丁式 if-else**
-   `EEGLLM_VQ.py` 第 286–297 行：作者原始注释"可能有错误的 batch 维度"，用多层分支勉强对齐，稳定性不佳。
-
-3. **重建解码器在 forward 里动态创建**
-   `EEGLLM_VQ.py` 第 318–331 行：`freq_decoder` / `raw_decoder` 在每个 forward 里重新创建，效率低且梯度图不稳定。建议改为 `__init__` 里一次性构建（需要提前确定 `freq_dim` 和 `raw_dim`）。
-
-4. **`exp_classification_vq.py` 的 test() 缺少 import**
-   该文件第 364 行调用 `metric(preds, trues)` 但 `metric` 未被 import；`compute_batch_metrics` 才是正确的函数名。测试阶段会 `NameError`。
-
-5. **`mapping_layer` 的设计目的不清晰**
-   `EEGLLM.py` 里把词表大小映射到固定 1000 个"原型"，这一步的必要性值得重新评估。
-
-这些都属于代码层面的小修，不影响对整体设计的理解。
-
----
-
 ## 引用与致谢
 
 本项目的模型骨架直接改写自 Time-LLM，VQ / 重建 / 域对抗部分参考 NeuroLM。
