@@ -1,6 +1,6 @@
 """
-TimeLLM 模型修改版本 - 支持EEG情绪分类
-保持向后兼容，最小改动原则
+EEGLLM 模型 - 面向 EEG 情绪分类
+基于 Time-LLM (ICLR 2024) 的重编程框架改造，把冻结的 LLM 用作 EEG 特征抽取的骨干。
 """
 
 import os
@@ -35,22 +35,6 @@ class ReverseLayerF(Function):
     def backward(ctx, grad_output):
         output = grad_output.neg() * ctx.alpha
         return output, None
-
-
-class FlattenHead(nn.Module):
-    """原始的预测头，保持不变"""
-    def __init__(self, n_vars, nf, target_window, head_dropout=0):
-        super().__init__()
-        self.n_vars = n_vars
-        self.flatten = nn.Flatten(start_dim=-2)
-        self.linear = nn.Linear(nf, target_window)
-        self.dropout = nn.Dropout(head_dropout)
-
-    def forward(self, x):
-        x = self.flatten(x)
-        x = self.linear(x)
-        x = self.dropout(x)
-        return x
 
 
 class ClassificationHead(nn.Module):
@@ -107,21 +91,20 @@ class ClassificationHead(nn.Module):
 
 
 class Model(nn.Module):
-    """修改后的TimeLLM模型，支持分类任务"""
-    
+    """EEGLLM 基础模型 - 用于 EEG 情绪分类"""
+
     def __init__(self, configs, patch_len=16, stride=8):
         super(Model, self).__init__()
         self.task_name = configs.task_name
-        self.pred_len = configs.pred_len
         self.seq_len = configs.seq_len
         self.d_ff = configs.d_ff
         self.top_k = 5
         self.d_llm = configs.llm_dim
         self.patch_len = configs.patch_len
         self.stride = configs.stride
-        
+
         # 打印任务信息
-        print(f"\n[TimeLLM] 初始化模型 - 任务类型: {self.task_name}")
+        print(f"\n[EEGLLM] 初始化模型 - 任务类型: {self.task_name}")
         
         # LLM配置（保持原样）
         if configs.llm_model == 'LLAMA':
@@ -188,13 +171,8 @@ class Model(nn.Module):
         # 冻结LLM
         for param in self.llm_model.parameters():
             param.requires_grad = False
-            
-        # 任务描述（根据任务类型调整）
-        if self.task_name == 'classification':
-            self.description = 'EEG signals for emotion recognition'
-        else:
-            self.description = 'Time series forecasting'
-            
+
+        self.description = 'EEG signals for emotion recognition'
         self.dropout = nn.Dropout(configs.dropout)
         
         # Patch嵌入层（保持原样）
@@ -216,57 +194,43 @@ class Model(nn.Module):
         # 计算patch数量
         self.patch_nums = int((configs.seq_len - self.patch_len) / self.stride + 2)
         self.head_nf = self.d_ff * self.patch_nums
-        
-        # 根据任务类型选择输出投影层
-        if self.task_name == 'long_term_forecast' or self.task_name == 'short_term_forecast':
-            self.output_projection = FlattenHead(
-                configs.enc_in, self.head_nf, self.pred_len,
-                head_dropout=configs.dropout)
-        elif self.task_name == 'classification':
-            # 新增：分类头
-            self.output_projection = ClassificationHead(
-                n_vars=configs.enc_in,
-                d_model=self.d_llm,  # 使用LLM的输出维度而不是d_ff
-                patch_nums=self.patch_nums,
-                num_class=configs.num_class,
-                dropout=configs.dropout
-            )
-            print(f"[TimeLLM] 分类任务配置:")
-            print(f"  - 类别数: {configs.num_class}")
-            print(f"  - 通道数: {configs.enc_in}")
-            print(f"  - Patch数: {self.patch_nums}")
-        else:
-            raise NotImplementedError(f"不支持的任务类型: {self.task_name}")
-        
+
+        # 分类头
+        if self.task_name != 'classification':
+            raise NotImplementedError(
+                f"EEGLLM 仅支持分类任务 (classification)，收到: {self.task_name}")
+
+        self.output_projection = ClassificationHead(
+            n_vars=configs.enc_in,
+            d_model=self.d_llm,  # 使用LLM的输出维度而不是d_ff
+            patch_nums=self.patch_nums,
+            num_class=configs.num_class,
+            dropout=configs.dropout
+        )
+        print(f"[EEGLLM] 分类任务配置:")
+        print(f"  - 类别数: {configs.num_class}")
+        print(f"  - 通道数: {configs.enc_in}")
+        print(f"  - Patch数: {self.patch_nums}")
+
         # 标准化层
         self.normalize_layers = Normalize(configs.enc_in, affine=False)
     
     def forward(self, x_enc, x_mark_enc, x_dec=None, x_mark_dec=None, mask=None, alpha=0.0, return_domain_loss=False):
         """
-        增强版统一forward接口 - 支持域对抗学习
+        EEG 分类 forward 接口（x_dec / x_mark_dec / mask 仅为保持签名兼容，未使用）
 
         Args:
             x_enc: 输入数据 [batch_size, seq_len, n_channels]
             x_mark_enc: 时间标记
-            x_dec, x_mark_dec: 解码器输入（预测任务用）
-            mask: 掩码（暂未使用）
             alpha: 域对抗训练权重
             return_domain_loss: 是否返回域分类损失
 
         Returns:
-            对于分类任务:
-                如果return_domain_loss=False: [batch_size, num_class] 分类logits
-                如果return_domain_loss=True: (分类logits, 域分类损失)
-            对于预测任务: [batch_size, pred_len, n_channels] 预测结果
+            return_domain_loss=False: [batch_size, num_class] 分类 logits
+            return_domain_loss=True : (分类 logits, 域分类损失)
         """
-        if self.task_name == 'long_term_forecast' or self.task_name == 'short_term_forecast':
-            dec_out = self.forecast(x_enc, x_mark_enc, x_dec, x_mark_dec)
-            return dec_out[:, -self.pred_len:, :]
-        elif self.task_name == 'classification':
-            # 分类任务 - 支持域对抗学习
-            return self.classification(x_enc, x_mark_enc, alpha=alpha, return_domain_loss=return_domain_loss)
-        else:
-            raise ValueError(f"未知的任务类型: {self.task_name}")
+        return self.classification(
+            x_enc, x_mark_enc, alpha=alpha, return_domain_loss=return_domain_loss)
     
     def classification(self, x_enc, x_mark_enc, alpha=0.0, return_domain_loss=False):
         """
@@ -385,66 +349,8 @@ class Model(nn.Module):
         else:
             return output
     
-    def forecast(self, x_enc, x_mark_enc, x_dec, x_mark_dec):
-        """原始的预测函数，保持不变"""
-        # [原始代码保持不变...]
-        x_enc = self.normalize_layers(x_enc, 'norm')
-
-        B, T, N = x_enc.size()
-        x_enc = x_enc.permute(0, 2, 1).contiguous().reshape(B * N, T, 1)
-
-        min_values = torch.min(x_enc, dim=1)[0]
-        max_values = torch.max(x_enc, dim=1)[0]
-        medians = torch.median(x_enc, dim=1).values
-        lags = self.calcute_lags(x_enc)
-        trends = x_enc.diff(dim=1).sum(dim=1)
-
-        prompt = []
-        for b in range(x_enc.shape[0]):
-            min_values_str = str(min_values[b].tolist()[0])
-            max_values_str = str(max_values[b].tolist()[0])
-            median_values_str = str(medians[b].tolist()[0])
-            lags_values_str = str(lags[b].tolist())
-            prompt_ = (
-                f"<|start_prompt|>Dataset description: {self.description}"
-                f"Task description: forecast the next {str(self.pred_len)} steps given the previous {str(self.seq_len)} steps information; "
-                "Input statistics: "
-                f"min value {min_values_str}, "
-                f"max value {max_values_str}, "
-                f"median value {median_values_str}, "
-                f"the trend of input is {'upward' if trends[b] > 0 else 'downward'}, "
-                f"top 5 lags are : {lags_values_str}<|<end_prompt>|>"
-            )
-
-            prompt.append(prompt_)
-
-        x_enc = x_enc.reshape(B, N, T).permute(0, 2, 1).contiguous()
-
-        prompt = self.tokenizer(prompt, return_tensors="pt", padding=True, truncation=True, max_length=2048).input_ids
-        prompt_embeddings = self.llm_model.get_input_embeddings()(prompt.to(x_enc.device))
-
-        source_embeddings = self.mapping_layer(self.word_embeddings.permute(1, 0)).permute(1, 0)
-
-        x_enc = x_enc.permute(0, 2, 1).contiguous()
-        enc_out, n_vars = self.patch_embedding(x_enc.float())
-        enc_out = self.reprogramming_layer(enc_out, source_embeddings, source_embeddings)
-        llama_enc_out = torch.cat([prompt_embeddings, enc_out], dim=1)
-        dec_out = self.llm_model(inputs_embeds=llama_enc_out).last_hidden_state
-        dec_out = dec_out[:, :, :self.d_ff]
-
-        dec_out = torch.reshape(
-            dec_out, (-1, n_vars, dec_out.shape[-2], dec_out.shape[-1]))
-        dec_out = dec_out.permute(0, 1, 3, 2).contiguous()
-
-        dec_out = self.output_projection(dec_out[:, :, :, -self.patch_nums:])
-        dec_out = dec_out.permute(0, 2, 1).contiguous()
-
-        dec_out = self.normalize_layers(dec_out, 'denorm')
-
-        return dec_out
-    
     def calcute_lags(self, x_enc):
-        """计算滞后相关性，保持原样"""
+        """计算滞后相关性（用于 prompt 统计）"""
         q_fft = torch.fft.rfft(x_enc.permute(0, 2, 1).contiguous(), dim=-1)
         k_fft = torch.fft.rfft(x_enc.permute(0, 2, 1).contiguous(), dim=-1)
         res = q_fft * torch.conj(k_fft)
@@ -602,81 +508,3 @@ class ReprogrammingLayer(nn.Module):
         return reprogramming_embedding
 
 
-# 测试代码
-if __name__ == "__main__":
-    print("=" * 70)
-    print("测试修改后的TimeLLM模型")
-    print("=" * 70)
-    
-    # 创建测试配置
-    class TestConfig:
-        def __init__(self, task='classification'):
-            # 基础配置
-            self.task_name = task
-            self.seq_len = 256
-            self.pred_len = 96
-            self.label_len = 48
-            
-            # 模型配置
-            self.d_model = 32
-            self.n_heads = 8
-            self.d_ff = 128
-            self.dropout = 0.1
-            self.patch_len = 16
-            self.stride = 8
-            
-            # LLM配置
-            self.llm_model = 'LLAMA'
-            self.llm_dim = 4096
-            self.llm_layers = 8
-            
-            # 数据配置
-            if task == 'classification':
-                self.enc_in = 32  # DEAP的32个通道
-                self.num_class = 2  # 二分类
-            else:
-                self.enc_in = 7  # 预测任务的通道数
-    
-    # 测试分类任务
-    print("\n1. 测试分类任务")
-    config = TestConfig('classification')
-    model = Model(config)
-    
-    # 创建随机输入（模拟data_loader_eeg的输出）
-    batch_size = 4
-    x = torch.randn(batch_size, config.seq_len, config.enc_in)
-    x_mark = torch.zeros(batch_size, config.seq_len, 4)
-    
-    print(f"\n输入数据形状:")
-    print(f"  - x: {x.shape}")
-    print(f"  - x_mark: {x_mark.shape}")
-    
-    # 前向传播
-    with torch.no_grad():
-        output = model(x, x_mark)
-    
-    print(f"\n输出形状: {output.shape}")
-    print(f"期望形状: [{batch_size}, {config.num_class}]")
-    print(f"输出样例: {output[0].numpy()}")
-    
-    # 测试预测任务（确保向后兼容）
-    print("\n" + "=" * 50)
-    print("2. 测试预测任务（向后兼容）")
-    config = TestConfig('long_term_forecast')
-    model = Model(config)
-    
-    # 创建预测任务的输入
-    x_enc = torch.randn(batch_size, config.seq_len, config.enc_in)
-    x_mark_enc = torch.zeros(batch_size, config.seq_len, 4)
-    x_dec = torch.randn(batch_size, config.label_len + config.pred_len, config.enc_in)
-    x_mark_dec = torch.zeros(batch_size, config.label_len + config.pred_len, 4)
-    
-    print(f"\n预测任务输入形状:")
-    print(f"  - x_enc: {x_enc.shape}")
-    print(f"  - x_dec: {x_dec.shape}")
-    
-    with torch.no_grad():
-        output = model(x_enc, x_mark_enc, x_dec, x_mark_dec)
-    
-    print(f"\n预测输出形状: {output.shape}")
-    print(f"期望形状: [{batch_size}, {config.pred_len}, {config.enc_in}]")

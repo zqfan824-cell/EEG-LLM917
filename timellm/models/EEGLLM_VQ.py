@@ -1,12 +1,12 @@
 """
-集成Vector Quantization和重建损失的TimeLLM模型
-参考NeuroLM的VQ机制，增强域对抗学习效果
+EEGLLM_VQ - 在 EEGLLM 基础上集成 Vector Quantization、重建损失和增强域对抗学习
+参考 NeuroLM 的 VQ 机制，提升 EEG 与 LLM 词空间的模态对齐效果
 """
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from models.TimeLLM import Model as TimeLLMBase, ReverseLayerF
+from models.EEGLLM import Model as EEGLLMBase, ReverseLayerF
 from utils.reconstruction_losses import NormEMAVectorQuantizer, ReconstructionLosses
 import math
 
@@ -107,9 +107,9 @@ class ModalContrastiveLearning(nn.Module):
         return contrastive_loss
 
 
-class TimeLLM_VQ(TimeLLMBase):
+class EEGLLM_VQ(EEGLLMBase):
     """
-    集成Vector Quantization和重建损失的TimeLLM模型
+    集成 Vector Quantization 和重建损失的 EEGLLM 模型
     """
     
     def __init__(self, configs):
@@ -198,13 +198,13 @@ class TimeLLM_VQ(TimeLLMBase):
             # 初始化增强域分类器
             self._init_enhanced_domain_classifier()
 
-            print(f"[TimeLLM_VQ] 增强模态对抗学习:")
+            print(f"[EEGLLM_VQ] 增强模态对抗学习:")
             print(f"  - 深层域分类器: {self.d_llm} -> 512 -> 256 -> 128 -> 2")
             print(f"  - 模态对齐调度器: {getattr(configs, 'alpha_schedule', 'sigmoid')}")
             print(f"  - 对比学习温度: {getattr(configs, 'contrastive_temp', 0.1)}")
             print(f"  - 使用LayerNorm和渐进Dropout正则化")
         
-        print(f"[TimeLLM_VQ] 初始化完成:")
+        print(f"[EEGLLM_VQ] 初始化完成:")
         print(f"  - VQ启用: {self.vq_enabled}")
         print(f"  - 重建损失启用: {self.reconstruction_enabled}")
         if self.vq_enabled:

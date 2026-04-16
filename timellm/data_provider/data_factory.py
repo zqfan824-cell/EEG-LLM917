@@ -1,184 +1,86 @@
 """
-修改后的data_factory.py
-在原有基础上添加EEG数据集（DEAP和SEED）的支持
-增加情绪相关通道选择功能
+EEG 数据加载工厂
+支持 DEAP 和 SEED 两个数据集，并提供情绪相关的通道选择策略。
 """
 
 from torch.utils.data import DataLoader
 
-# 导入改进的EEG数据加载器
 from data_provider.data_loader_eeg import Dataset_DEAP, Dataset_SEED, ChannelSelector
 
 data_dict = {
-    #'PSM': PSMSegLoader,
-    #'MSL': MSLSegLoader,
-    #'SMAP': SMAPSegLoader,
-    #'SMD': SMDSegLoader,
-    #'SWAT': SWATSegLoader,
-    #'UEA': UEAloader,
-    # 添加EEG数据集
     'DEAP': Dataset_DEAP,
     'SEED': Dataset_SEED,
 }
 
 
 def data_provider(args, flag):
+    if args.data not in data_dict:
+        raise ValueError(
+            f"不支持的数据集: {args.data}，可选: {list(data_dict.keys())}")
+
     Data = data_dict[args.data]
-    timeenc = 0 if args.embed != 'timeF' else 1
 
-    # 处理EEG数据集
-    if args.data in ['DEAP', 'SEED']:
-        # EEG数据集的特殊参数处理
-        if flag == 'test':
-            shuffle_flag = False
-            drop_last = False  # 测试集不丢弃最后一批
-            batch_size = args.batch_size
-        else:
-            shuffle_flag = True
-            drop_last = True
-            batch_size = args.batch_size
-
-        # 创建EEG数据集实例
-        if args.data == 'DEAP':
-            # DEAP特定参数
-            deap_args = {
-                'root_path': args.root_path,
-                'flag': flag,
-                'seq_len': args.seq_len,
-                'pred_len': args.pred_len if hasattr(args, 'pred_len') else 0,
-                'label_len': args.label_len if hasattr(args, 'label_len') else 0,
-                'n_class': args.num_class,
-                'classification_type': getattr(args, 'classification_type', 'valence'),
-                'subject_list': getattr(args, 'subject_list', None),
-                'overlap': getattr(args, 'overlap', 0),
-                'normalize': getattr(args, 'normalize', True),
-                'filter_freq': getattr(args, 'filter_freq', None),
-                'sampling_rate': getattr(args, 'sampling_rate', 128),
-                # 新增的通道选择参数
-                'channel_selection': getattr(args, 'channel_selection', 'auto'),
-                'use_channel_selection': getattr(args, 'use_channel_selection', True)
-            }
-            
-            data_set = Data(**deap_args)
-            
-            # 更新args中的通道数（重要！）
-            if hasattr(data_set, 'n_channels'):
-                args.enc_in = data_set.n_channels
-                args.dec_in = data_set.n_channels
-                args.c_out = data_set.n_channels
-                print(f"已更新模型输入通道数为: {data_set.n_channels}")
-                
-        else:  # SEED
-            seed_args = {
-                'root_path': args.root_path,
-                'flag': flag,
-                'seq_len': args.seq_len,
-                'pred_len': args.pred_len if hasattr(args, 'pred_len') else 0,
-                'label_len': args.label_len if hasattr(args, 'label_len') else 0,
-                'n_class': args.num_class,
-                'subject_list': getattr(args, 'subject_list', None),
-                'overlap': getattr(args, 'overlap', 0),
-                'normalize': getattr(args, 'normalize', True),
-                'filter_freq': getattr(args, 'filter_freq', None),
-                'sampling_rate': getattr(args, 'sampling_rate', 200)
-            }
-            
-            data_set = Data(**seed_args)
-
-        # 创建数据加载器
-        data_loader = DataLoader(
-            data_set,
-            batch_size=batch_size,
-            shuffle=shuffle_flag,
-            num_workers=args.num_workers,
-            drop_last=drop_last
-        )
-
-        return data_set, data_loader
-
-    # 原有数据集的处理逻辑
-    elif args.data == 'm4':
-        drop_last = False
-        if flag == 'pred':
-            shuffle_flag = False
-            drop_last = False
-            batch_size = 1
-            freq = args.freq
-        else:
-            shuffle_flag = True
-            drop_last = True
-            batch_size = args.batch_size
-            freq = args.freq
-
-        data_set = Data(
-            root_path=args.root_path,
-            flag=flag,
-            size=[args.seq_len, args.label_len, args.pred_len],
-            freq=freq,
-            seasonal_patterns=args.seasonal_patterns
-        )
-        data_loader = DataLoader(
-            data_set,
-            batch_size=batch_size,
-            shuffle=shuffle_flag,
-            num_workers=args.num_workers,
-            drop_last=drop_last
-        )
-        return data_set, data_loader
-
-    elif args.data == 'UEA':
-        drop_last = False
-        if flag == 'test':
-            shuffle_flag = False
-            drop_last = False
-        else:
-            shuffle_flag = True
-            drop_last = False
-        data_set = Data(
-            root_path=args.root_path,
-            flag=flag,
-        )
-        data_loader = DataLoader(
-            data_set,
-            batch_size=args.batch_size,
-            shuffle=shuffle_flag,
-            num_workers=args.num_workers,
-            drop_last=drop_last,
-            collate_fn=lambda x: collate_fn(x, max_len=args.seq_len)
-        )
-        return data_set, data_loader
-
+    # EEG 数据集参数
+    if flag == 'test':
+        shuffle_flag = False
+        drop_last = False  # 测试集不丢弃最后一批
+        batch_size = args.batch_size
     else:
-        if flag == 'test':
-            shuffle_flag = False
-            drop_last = False
-            batch_size = args.batch_size
-            freq = args.freq
-        else:
-            shuffle_flag = True
-            drop_last = True
-            batch_size = args.batch_size
-            freq = args.freq
+        shuffle_flag = True
+        drop_last = True
+        batch_size = args.batch_size
 
-        data_set = Data(
-            root_path=args.root_path,
-            data_path=args.data_path,
-            flag=flag,
-            size=[args.seq_len, args.label_len, args.pred_len],
-            features=args.features,
-            target=args.target,
-            timeenc=timeenc,
-            freq=freq,
-            seasonal_patterns=args.seasonal_patterns
-        )
-        data_loader = DataLoader(
-            data_set,
-            batch_size=batch_size,
-            shuffle=shuffle_flag,
-            num_workers=args.num_workers,
-            drop_last=drop_last
-        )
-        return data_set, data_loader
+    if args.data == 'DEAP':
+        deap_args = {
+            'root_path': args.root_path,
+            'flag': flag,
+            'seq_len': args.seq_len,
+            'pred_len': args.pred_len if hasattr(args, 'pred_len') else 0,
+            'label_len': args.label_len if hasattr(args, 'label_len') else 0,
+            'n_class': args.num_class,
+            'classification_type': getattr(args, 'classification_type', 'valence'),
+            'subject_list': getattr(args, 'subject_list', None),
+            'overlap': getattr(args, 'overlap', 0),
+            'normalize': getattr(args, 'normalize', True),
+            'filter_freq': getattr(args, 'filter_freq', None),
+            'sampling_rate': getattr(args, 'sampling_rate', 128),
+            'channel_selection': getattr(args, 'channel_selection', 'auto'),
+            'use_channel_selection': getattr(args, 'use_channel_selection', True)
+        }
+        data_set = Data(**deap_args)
+
+        # 根据实际通道选择结果更新模型输入通道数
+        if hasattr(data_set, 'n_channels'):
+            args.enc_in = data_set.n_channels
+            args.dec_in = data_set.n_channels
+            args.c_out = data_set.n_channels
+            print(f"已更新模型输入通道数为: {data_set.n_channels}")
+
+    else:  # SEED
+        seed_args = {
+            'root_path': args.root_path,
+            'flag': flag,
+            'seq_len': args.seq_len,
+            'pred_len': args.pred_len if hasattr(args, 'pred_len') else 0,
+            'label_len': args.label_len if hasattr(args, 'label_len') else 0,
+            'n_class': args.num_class,
+            'subject_list': getattr(args, 'subject_list', None),
+            'overlap': getattr(args, 'overlap', 0),
+            'normalize': getattr(args, 'normalize', True),
+            'filter_freq': getattr(args, 'filter_freq', None),
+            'sampling_rate': getattr(args, 'sampling_rate', 200)
+        }
+        data_set = Data(**seed_args)
+
+    data_loader = DataLoader(
+        data_set,
+        batch_size=batch_size,
+        shuffle=shuffle_flag,
+        num_workers=args.num_workers,
+        drop_last=drop_last
+    )
+
+    return data_set, data_loader
 
 
 def print_available_channel_groups():

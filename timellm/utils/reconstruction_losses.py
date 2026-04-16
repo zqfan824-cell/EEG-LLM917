@@ -1,6 +1,6 @@
 """
 重建损失函数实现
-参考NeuroLM的VQ机制，为TimeLLM添加重建约束
+参考NeuroLM的VQ机制，为EEGLLM添加重建约束
 """
 
 import torch
@@ -117,7 +117,7 @@ class ReconstructionLosses(nn.Module):
 class NormEMAVectorQuantizer(nn.Module):
     """
     标准化EMA向量量化器
-    参考NeuroLM的实现，适配TimeLLM
+    参考NeuroLM的实现，适配EEGLLM
     """
     
     def __init__(self, n_embed=8192, embedding_dim=128, beta=1.0, decay=0.99, eps=1e-5):

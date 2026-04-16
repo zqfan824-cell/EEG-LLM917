@@ -1,6 +1,6 @@
 """
-支持VQ和重建损失的分类实验类
-集成NeuroLM的重建机制，增强TimeLLM的域对抗学习效果
+支持 VQ 和重建损失的 EEG 分类实验类
+集成 NeuroLM 的重建机制，增强 EEGLLM 的域对抗学习效果
 """
 
 import os
@@ -12,7 +12,7 @@ import torch.nn as nn
 from torch import optim
 
 from data_provider.data_factory import data_provider
-from models.TimeLLM_VQ import TimeLLM_VQ
+from models.EEGLLM_VQ import EEGLLM_VQ
 from utils.reconstruction_losses import AdaptiveLossWeighter
 from utils.tools import EarlyStopping, adjust_learning_rate
 from utils.metrics_classification import compute_batch_metrics
@@ -53,7 +53,7 @@ class Exp_Classification_VQ:
     
     def _build_model(self):
         """构建模型"""
-        model = TimeLLM_VQ(self.args).float()
+        model = EEGLLM_VQ(self.args).float()
         
         if self.args.use_multi_gpu and self.args.use_gpu:
             model = nn.DataParallel(model, device_ids=self.args.device_ids)

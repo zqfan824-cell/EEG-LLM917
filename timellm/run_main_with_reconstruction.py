@@ -1,6 +1,6 @@
 """
-支持重建损失的TimeLLM训练脚本
-集成NeuroLM的VQ机制和重建损失，增强域对抗学习效果
+EEGLLM 训练脚本
+集成 NeuroLM 的 VQ 机制和重建损失，增强 EEG 情绪分类的域对抗学习效果
 """
 
 import os
@@ -24,23 +24,22 @@ from accelerate import DistributedDataParallelKwargs
 from torch.utils.data import DataLoader
 
 from data_provider.data_factory import data_provider
-from models.TimeLLM import Model as TimeLLM
-from models.TimeLLM_VQ import TimeLLM_VQ
+from models.EEGLLM import Model as EEGLLM
+from models.EEGLLM_VQ import EEGLLM_VQ
 from utils.reconstruction_losses import AdaptiveLossWeighter
 
-from utils.tools import EarlyStopping, adjust_learning_rate, load_content
-from utils.tools import del_files
+from utils.tools import EarlyStopping, adjust_learning_rate
 
 
-parser = argparse.ArgumentParser(description='TimeLLM with Reconstruction Loss')
+parser = argparse.ArgumentParser(description='EEGLLM with Reconstruction Loss')
 
 # 基础配置
 parser.add_argument('--task_name', type=str, required=True, default='classification',
                     help='task name, options:[long_term_forecast, short_term_forecast, classification]')
 parser.add_argument('--is_training', type=int, required=True, default=1, help='status')
-parser.add_argument('--model_id', type=str, required=True, default='DEAP_TimeLLM_VQ', help='model id')
-parser.add_argument('--model', type=str, required=True, default='TimeLLM_VQ',
-                    help='model name, options: [Autoformer, DLinear, TimeLLM, TimeLLM_VQ]')
+parser.add_argument('--model_id', type=str, required=True, default='DEAP_EEGLLM_VQ', help='model id')
+parser.add_argument('--model', type=str, required=True, default='EEGLLM_VQ',
+                    help='model name, options: [EEGLLM, EEGLLM_VQ]')
 
 # 数据配置
 parser.add_argument('--data', type=str, required=True, default='DEAP', help='dataset type')

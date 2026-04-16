@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# TimeLLM with VQ and Reconstruction Loss - DEAP Dataset
-# 集成NeuroLM的重建损失机制，增强域对抗学习效果
+# EEGLLM with VQ and Reconstruction Loss - DEAP Dataset
+# 集成 NeuroLM 的重建损失机制，增强 EEG 情绪分类的域对抗学习效果
 
-echo "=== TimeLLM with VQ and Reconstruction Loss ==="
+echo "=== EEGLLM with VQ and Reconstruction Loss ==="
 echo "Dataset: DEAP"
 echo "Task: EEG Emotion Classification"
 echo "Features: VQ + Reconstruction Loss + Domain Adversarial Learning"
 echo ""
 
 # 基础配置
-MODEL_ID="DEAP_TimeLLM_VQ"
-MODEL="TimeLLM_VQ"
+MODEL_ID="DEAP_EEGLLM_VQ"
+MODEL="EEGLLM_VQ"
 DATA="DEAP"
 ROOT_PATH="/root/autodl-tmp/data_preprocessed_python/"
 SEQ_LEN=256
@@ -55,7 +55,7 @@ LLM_LAYERS=2
 PATCH_LEN=16
 STRIDE=8
 
-echo "开始训练 TimeLLM_VQ 模型..."
+echo "开始训练 EEGLLM_VQ 模型..."
 echo "配置参数:"
 echo "  - VQ嵌入维度: $VQ_EMBED_DIM"
 echo "  - VQ码本大小: $VQ_N_EMBED"
