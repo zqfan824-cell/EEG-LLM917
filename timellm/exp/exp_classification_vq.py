@@ -190,7 +190,9 @@ class Exp_Classification_VQ:
         time_now = time.time()
         
         train_steps = len(train_loader)
-        early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
+        # 盯验证准确率（mode='max'）——组合自适应 loss 被 VQ/重建项主导、会跑成负数，
+        # 与分类好坏脱钩，不能用来选模型
+        early_stopping = EarlyStopping(patience=self.args.patience, verbose=True, mode='max')
         
         model_optim = self._select_optimizer()
         criterion = self._select_criterion()
@@ -302,7 +304,7 @@ class Exp_Classification_VQ:
             vali_losses.append(vali_loss)
             vali_accuracies.append(vali_accuracy)
             
-            early_stopping(vali_loss, self.model, path)
+            early_stopping(vali_accuracy, self.model, path)
             if early_stopping.early_stop:
                 print("Early stopping")
                 break

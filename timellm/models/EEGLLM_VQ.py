@@ -271,7 +271,12 @@ class EEGLLM_VQ(EEGLLMBase):
             # x_enc_original: (B, N, seq_len) —— FFT 沿时间轴
             x_enc_fft = torch.fft.fft(x_enc_original, dim=2)
             freq_target = torch.abs(x_enc_fft)[:, :, :seq_len // 2]  # (B, N, seq_len // 2)
-            raw_target = x_enc_original                               # (B, N, seq_len)
+            # abs(FFT) 幅度量级大（freq MSE 可达 ~70），会淹没分类损失（~0.17）。
+            # 沿频率轴做 z-score，把重建目标压到 O(1)，让分类信号不被埋掉。
+            freq_mean = freq_target.mean(dim=2, keepdim=True)
+            freq_std = freq_target.std(dim=2, keepdim=True)
+            freq_target = (freq_target - freq_mean) / (freq_std + 1e-8)
+            raw_target = x_enc_original                               # (B, N, seq_len)，已经过 RevIN 归一化
 
             # 按通道分组：(B*N, num_patches, vq_embed_dim) → (B, N, vq_embed_dim)
             quantized_for_recon = quantized_features.view(B, N, num_patches, self.vq_embed_dim)

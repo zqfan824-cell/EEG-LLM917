@@ -1,4 +1,6 @@
+import os
 import numpy as np
+import torch
 
 
 def adjust_learning_rate(accelerator, optimizer, scheduler, epoch, args, printout=True):
@@ -75,9 +77,10 @@ class EarlyStopping:
 
         if self.best_score is None:
             self.best_score = score
-            self.val_metric_best = val_metric
             if self.save_mode:
                 self.save_checkpoint(val_metric, model, path)
+            else:
+                self.val_metric_best = val_metric
         elif not is_improvement:
             self.counter += 1
             if self.accelerator is None:
@@ -88,22 +91,23 @@ class EarlyStopping:
                 self.early_stop = True
         else:
             self.best_score = score
-            self.val_metric_best = val_metric
             if self.save_mode:
                 self.save_checkpoint(val_metric, model, path)
+            else:
+                self.val_metric_best = val_metric
             self.counter = 0
 
     def save_checkpoint(self, val_metric, model, path):
         """保存模型检查点"""
         if self.verbose:
-            if self.mode == 'min':
-                message = f'Validation metric decreased ({self.val_metric_best:.6f} --> {val_metric:.6f}). Saving model ...'
-            else:
-                message = f'Validation metric increased ({self.val_metric_best:.6f} --> {val_metric:.6f}). Saving model ...'
-
+            direction = 'decreased' if self.mode == 'min' else 'increased'
+            message = f'Validation metric {direction} ({self.val_metric_best:.6f} --> {val_metric:.6f}). Saving model ...'
             if self.accelerator is not None:
                 self.accelerator.print(message)
             else:
                 print(message)
 
+        # 真正把模型权重落盘（之前缺这一行，导致 train() 末尾 torch.load 必崩）
+        os.makedirs(path, exist_ok=True)
+        torch.save(model.state_dict(), os.path.join(path, 'checkpoint.pth'))
         self.val_metric_best = val_metric
