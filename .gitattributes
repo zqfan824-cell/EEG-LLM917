@@ -1,0 +1,2 @@
+# Shell scripts run on Colab/Linux — force LF so bash doesn't choke on \r
+*.sh text eol=lf
