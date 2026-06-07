@@ -1,0 +1,5 @@
+# CodeGraph index (local-only, ~MBs of SQLite — never commit)
+.codegraph/
+
+# Claude Code session state & leftover worktrees
+.claude/

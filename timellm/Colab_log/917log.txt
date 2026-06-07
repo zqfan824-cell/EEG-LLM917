@@ -1,0 +1,1534 @@
+Epoch 14 cost time 383.1331388950348
+Epoch 14, Steps 3100  Train Loss -3.4516187 Vali Loss -5.2043857 Test Loss -5.3113402
+Vali Accuracy 0.5583 Test Accuracy 0.6292
+Validation metric decreased (-5.204386 -- -5.204386). Saving model ...
+	iters 100, epoch 15  loss -3.7698143
+	  - Classification 0.1742312
+	  - Domain 0.6194476
+	  - VQ 0.0000114
+	  - Reconstruction 70.0396957
+	  - Contrastive 6.1944757
+	  - Alpha 0.9982
+	speed 1.0221siter; left time 18910.1658s
+	iters 200, epoch 15  loss -3.9589977
+	  - Classification 0.1588632
+	  - Domain 0.6184892
+	  - VQ 0.0000114
+	  - Reconstruction 64.6242599
+	  - Contrastive 6.1848922
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2276.3778s
+	iters 300, epoch 15  loss -3.7758167
+	  - Classification 0.1836743
+	  - Domain 0.6194882
+	  - VQ 0.0000115
+	  - Reconstruction 68.3379059
+	  - Contrastive 6.1948814
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2263.8926s
+	iters 400, epoch 15  loss -3.9169579
+	  - Classification 0.1691030
+	  - Domain 0.6177246
+	  - VQ 0.0000122
+	  - Reconstruction 65.7600861
+	  - Contrastive 6.1772456
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2251.4318s
+	iters 500, epoch 15  loss -3.6924338
+	  - Classification 0.1896055
+	  - Domain 0.6080841
+	  - VQ 0.0000128
+	  - Reconstruction 76.1943665
+	  - Contrastive 6.0808406
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2239.3442s
+	iters 600, epoch 15  loss -3.7960286
+	  - Classification 0.1742245
+	  - Domain 0.6083638
+	  - VQ 0.0000139
+	  - Reconstruction 75.9119720
+	  - Contrastive 6.0836377
+	  - Alpha 0.9982
+	speed 0.1238siter; left time 2228.5611s
+	iters 700, epoch 15  loss -4.0331984
+	  - Classification 0.1795863
+	  - Domain 0.6050056
+	  - VQ 0.0000154
+	  - Reconstruction 58.6091690
+	  - Contrastive 6.0500555
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2214.2103s
+	iters 800, epoch 15  loss -3.9108250
+	  - Classification 0.1799380
+	  - Domain 0.6026747
+	  - VQ 0.0000160
+	  - Reconstruction 68.4068985
+	  - Contrastive 6.0267463
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2202.8133s
+	iters 900, epoch 15  loss -3.9512308
+	  - Classification 0.1619756
+	  - Domain 0.5982865
+	  - VQ 0.0000161
+	  - Reconstruction 74.9458847
+	  - Contrastive 5.9828649
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2189.5618s
+	iters 1000, epoch 15  loss -3.9818075
+	  - Classification 0.1708483
+	  - Domain 0.6069224
+	  - VQ 0.0000156
+	  - Reconstruction 68.7218781
+	  - Contrastive 6.0692244
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2177.9195s
+	iters 1100, epoch 15  loss -4.0276155
+	  - Classification 0.1706424
+	  - Domain 0.6094745
+	  - VQ 0.0000135
+	  - Reconstruction 67.2959900
+	  - Contrastive 6.0947452
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2164.0971s
+	iters 1200, epoch 15  loss -4.1071439
+	  - Classification 0.1723300
+	  - Domain 0.6103076
+	  - VQ 0.0000118
+	  - Reconstruction 63.0675278
+	  - Contrastive 6.1030765
+	  - Alpha 0.9982
+	speed 0.1238siter; left time 2154.3147s
+	iters 1300, epoch 15  loss -3.7103906
+	  - Classification 0.1713760
+	  - Domain 0.7129338
+	  - VQ 0.0000094
+	  - Reconstruction 70.5911484
+	  - Contrastive 7.1293383
+	  - Alpha 0.9982
+	speed 0.1238siter; left time 2141.6494s
+	iters 1400, epoch 15  loss -3.9141850
+	  - Classification 0.1692600
+	  - Domain 0.6637222
+	  - VQ 0.0000104
+	  - Reconstruction 69.2442017
+	  - Contrastive 6.6372218
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2127.7883s
+	iters 1500, epoch 15  loss -3.9029207
+	  - Classification 0.1684067
+	  - Domain 0.6496393
+	  - VQ 0.0000101
+	  - Reconstruction 74.7749634
+	  - Contrastive 6.4963927
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2114.8563s
+	iters 1600, epoch 15  loss -3.8539042
+	  - Classification 0.1936385
+	  - Domain 0.6450146
+	  - VQ 0.0000091
+	  - Reconstruction 70.8626022
+	  - Contrastive 6.4501457
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2103.6494s
+	iters 1700, epoch 15  loss -3.9434755
+	  - Classification 0.1799006
+	  - Domain 0.6305494
+	  - VQ 0.0000092
+	  - Reconstruction 74.5275803
+	  - Contrastive 6.3054938
+	  - Alpha 0.9982
+	speed 0.1238siter; left time 2091.9301s
+	iters 1800, epoch 15  loss -3.9500909
+	  - Classification 0.1752389
+	  - Domain 0.6333737
+	  - VQ 0.0000078
+	  - Reconstruction 77.4379349
+	  - Contrastive 6.3337369
+	  - Alpha 0.9982
+	speed 0.1236siter; left time 2077.2402s
+	iters 1900, epoch 15  loss -4.1534929
+	  - Classification 0.1595097
+	  - Domain 0.6273830
+	  - VQ 0.0000092
+	  - Reconstruction 71.5017014
+	  - Contrastive 6.2738299
+	  - Alpha 0.9982
+	speed 0.1236siter; left time 2063.8089s
+	iters 2000, epoch 15  loss -4.1909609
+	  - Classification 0.1748463
+	  - Domain 0.6230912
+	  - VQ 0.0000087
+	  - Reconstruction 65.2697372
+	  - Contrastive 6.2309122
+	  - Alpha 0.9982
+	speed 0.1236siter; left time 2052.5824s
+	iters 2100, epoch 15  loss -4.1050711
+	  - Classification 0.1797447
+	  - Domain 0.6249495
+	  - VQ 0.0000088
+	  - Reconstruction 70.0384674
+	  - Contrastive 6.2494950
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2041.1158s
+	iters 2200, epoch 15  loss -4.2029877
+	  - Classification 0.1689171
+	  - Domain 0.6208458
+	  - VQ 0.0000084
+	  - Reconstruction 70.0336304
+	  - Contrastive 6.2084579
+	  - Alpha 0.9982
+	speed 0.1238siter; left time 2029.7921s
+	iters 2300, epoch 15  loss -4.1034203
+	  - Classification 0.1796774
+	  - Domain 0.6195670
+	  - VQ 0.0000086
+	  - Reconstruction 74.0751801
+	  - Contrastive 6.1956697
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2017.1159s
+	iters 2400, epoch 15  loss -4.2380476
+	  - Classification 0.1742183
+	  - Domain 0.6274064
+	  - VQ 0.0000082
+	  - Reconstruction 66.7824860
+	  - Contrastive 6.2740641
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 2003.4673s
+	iters 2500, epoch 15  loss -4.1617351
+	  - Classification 0.1642450
+	  - Domain 0.6167147
+	  - VQ 0.0000088
+	  - Reconstruction 79.2121048
+	  - Contrastive 6.1671472
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 1991.3900s
+	iters 2600, epoch 15  loss -4.2000990
+	  - Classification 0.1742485
+	  - Domain 0.6246755
+	  - VQ 0.0000076
+	  - Reconstruction 72.9180374
+	  - Contrastive 6.2467551
+	  - Alpha 0.9982
+	speed 0.1236siter; left time 1978.1457s
+	iters 2700, epoch 15  loss -4.4192867
+	  - Classification 0.1581154
+	  - Domain 0.6215410
+	  - VQ 0.0000078
+	  - Reconstruction 66.1090012
+	  - Contrastive 6.2154093
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 1967.2092s
+	iters 2800, epoch 15  loss -4.2773385
+	  - Classification 0.1635560
+	  - Domain 0.6191551
+	  - VQ 0.0000079
+	  - Reconstruction 75.4035645
+	  - Contrastive 6.1915507
+	  - Alpha 0.9982
+	speed 0.1236siter; left time 1952.6245s
+	iters 2900, epoch 15  loss -4.3979855
+	  - Classification 0.1742615
+	  - Domain 0.6270233
+	  - VQ 0.0000075
+	  - Reconstruction 62.6724052
+	  - Contrastive 6.2702327
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 1942.0733s
+	iters 3000, epoch 15  loss -4.4850068
+	  - Classification 0.1644224
+	  - Domain 0.6301716
+	  - VQ 0.0000073
+	  - Reconstruction 61.3004112
+	  - Contrastive 6.3017159
+	  - Alpha 0.9982
+	speed 0.1238siter; left time 1930.8554s
+	iters 3100, epoch 15  loss -4.3601756
+	  - Classification 0.1793950
+	  - Domain 0.6304139
+	  - VQ 0.0000068
+	  - Reconstruction 65.5386429
+	  - Contrastive 6.3041396
+	  - Alpha 0.9982
+	speed 0.1237siter; left time 1917.0326s
+Epoch 15 cost time 383.6213984489441
+Epoch 15, Steps 3100  Train Loss -4.0503593 Vali Loss -5.8010273 Test Loss -5.9111789
+Vali Accuracy 0.5583 Test Accuracy 0.6292
+Validation metric decreased (-5.801027 -- -5.801027). Saving model ...
+	iters 100, epoch 16  loss -4.1765928
+	  - Classification 0.1738786
+	  - Domain 0.6236888
+	  - VQ 0.0000076
+	  - Reconstruction 82.5416489
+	  - Contrastive 6.2368875
+	  - Alpha 0.9989
+	speed 1.0253siter; left time 15790.4387s
+	iters 200, epoch 16  loss -4.2944221
+	  - Classification 0.1656334
+	  - Domain 0.6234331
+	  - VQ 0.0000070
+	  - Reconstruction 79.4473877
+	  - Contrastive 6.2343302
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1884.3586s
+	iters 300, epoch 16  loss -4.3673391
+	  - Classification 0.1696950
+	  - Domain 0.6216049
+	  - VQ 0.0000069
+	  - Reconstruction 74.5706329
+	  - Contrastive 6.2160487
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1872.6604s
+	iters 400, epoch 16  loss -4.3102779
+	  - Classification 0.1873769
+	  - Domain 0.6329351
+	  - VQ 0.0000064
+	  - Reconstruction 70.6599655
+	  - Contrastive 6.3293509
+	  - Alpha 0.9989
+	speed 0.1231siter; left time 1859.3744s
+	iters 500, epoch 16  loss -4.4190788
+	  - Classification 0.1840265
+	  - Domain 0.6322803
+	  - VQ 0.0000061
+	  - Reconstruction 66.1439514
+	  - Contrastive 6.3228030
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1847.4041s
+	iters 600, epoch 16  loss -4.4380736
+	  - Classification 0.1790836
+	  - Domain 0.6390473
+	  - VQ 0.0000062
+	  - Reconstruction 66.5073547
+	  - Contrastive 6.3904729
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1835.3117s
+	iters 700, epoch 16  loss -4.4027667
+	  - Classification 0.1741947
+	  - Domain 0.6336979
+	  - VQ 0.0000064
+	  - Reconstruction 73.2191315
+	  - Contrastive 6.3369789
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1823.0365s
+	iters 800, epoch 16  loss -4.5239043
+	  - Classification 0.1742630
+	  - Domain 0.6459236
+	  - VQ 0.0000055
+	  - Reconstruction 64.2088623
+	  - Contrastive 6.4592357
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1811.7486s
+	iters 900, epoch 16  loss -4.3755035
+	  - Classification 0.1690434
+	  - Domain 0.6421779
+	  - VQ 0.0000060
+	  - Reconstruction 78.1438675
+	  - Contrastive 6.4217787
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1799.3858s
+	iters 1000, epoch 16  loss -4.4780211
+	  - Classification 0.1797737
+	  - Domain 0.6418185
+	  - VQ 0.0000058
+	  - Reconstruction 68.3214340
+	  - Contrastive 6.4181852
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1786.5297s
+	iters 1100, epoch 16  loss -4.4202800
+	  - Classification 0.1851715
+	  - Domain 0.6406208
+	  - VQ 0.0000052
+	  - Reconstruction 72.2635345
+	  - Contrastive 6.4062076
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1774.7301s
+	iters 1200, epoch 16  loss -4.5962377
+	  - Classification 0.1585903
+	  - Domain 0.6376554
+	  - VQ 0.0000056
+	  - Reconstruction 72.2525330
+	  - Contrastive 6.3765535
+	  - Alpha 0.9989
+	speed 0.1230siter; left time 1759.7201s
+	iters 1300, epoch 16  loss -4.5901408
+	  - Classification 0.1689845
+	  - Domain 0.6457617
+	  - VQ 0.0000055
+	  - Reconstruction 68.1707153
+	  - Contrastive 6.4576163
+	  - Alpha 0.9989
+	speed 0.1231siter; left time 1748.4285s
+	iters 1400, epoch 16  loss -4.7464509
+	  - Classification 0.1635500
+	  - Domain 0.6468932
+	  - VQ 0.0000049
+	  - Reconstruction 61.1842155
+	  - Contrastive 6.4689317
+	  - Alpha 0.9989
+	speed 0.1231siter; left time 1735.8505s
+	iters 1500, epoch 16  loss -4.5791883
+	  - Classification 0.1743262
+	  - Domain 0.6424194
+	  - VQ 0.0000047
+	  - Reconstruction 70.8194427
+	  - Contrastive 6.4241939
+	  - Alpha 0.9989
+	speed 0.1231siter; left time 1723.3092s
+	iters 1600, epoch 16  loss -4.7992263
+	  - Classification 0.1633314
+	  - Domain 0.6396731
+	  - VQ 0.0000054
+	  - Reconstruction 61.3074913
+	  - Contrastive 6.3967309
+	  - Alpha 0.9989
+	speed 0.1230siter; left time 1710.4062s
+	iters 1700, epoch 16  loss -4.7202153
+	  - Classification 0.1743015
+	  - Domain 0.6472524
+	  - VQ 0.0000047
+	  - Reconstruction 62.6850128
+	  - Contrastive 6.4725237
+	  - Alpha 0.9989
+	speed 0.1230siter; left time 1698.1982s
+	iters 1800, epoch 16  loss -4.7190828
+	  - Classification 0.1743646
+	  - Domain 0.6454241
+	  - VQ 0.0000039
+	  - Reconstruction 65.3095245
+	  - Contrastive 6.4542403
+	  - Alpha 0.9989
+	speed 0.1231siter; left time 1686.3310s
+	iters 1900, epoch 16  loss -4.6335359
+	  - Classification 0.1688901
+	  - Domain 0.6358926
+	  - VQ 0.0000048
+	  - Reconstruction 75.8005905
+	  - Contrastive 6.3589258
+	  - Alpha 0.9989
+	speed 0.1233siter; left time 1676.7473s
+	iters 2000, epoch 16  loss -4.7252560
+	  - Classification 0.1629530
+	  - Domain 0.6605064
+	  - VQ 0.0000045
+	  - Reconstruction 68.1519852
+	  - Contrastive 6.6050639
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1663.1541s
+	iters 2100, epoch 16  loss -4.8061790
+	  - Classification 0.1790906
+	  - Domain 0.6292096
+	  - VQ 0.0000043
+	  - Reconstruction 64.3087921
+	  - Contrastive 6.2920957
+	  - Alpha 0.9989
+	speed 0.1233siter; left time 1651.7308s
+	iters 2200, epoch 16  loss -4.6933837
+	  - Classification 0.1688960
+	  - Domain 0.6264854
+	  - VQ 0.0000037
+	  - Reconstruction 78.7301941
+	  - Contrastive 6.2648540
+	  - Alpha 0.9989
+	speed 0.1235siter; left time 1643.1330s
+	iters 2300, epoch 16  loss -5.0276165
+	  - Classification 0.1629781
+	  - Domain 0.6316953
+	  - VQ 0.0000035
+	  - Reconstruction 58.4370193
+	  - Contrastive 6.3169527
+	  - Alpha 0.9989
+	speed 0.1236siter; left time 1631.0468s
+	iters 2400, epoch 16  loss -4.7842512
+	  - Classification 0.1687215
+	  - Domain 0.6269405
+	  - VQ 0.0000049
+	  - Reconstruction 73.6624908
+	  - Contrastive 6.2694049
+	  - Alpha 0.9989
+	speed 0.1236siter; left time 1619.5349s
+	iters 2500, epoch 16  loss -4.6266613
+	  - Classification 0.1686776
+	  - Domain 0.6293297
+	  - VQ 0.0000044
+	  - Reconstruction 85.8809509
+	  - Contrastive 6.2932973
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1601.6996s
+	iters 2600, epoch 16  loss -4.7494793
+	  - Classification 0.1801428
+	  - Domain 0.6392314
+	  - VQ 0.0000038
+	  - Reconstruction 72.7351608
+	  - Contrastive 6.3923135
+	  - Alpha 0.9989
+	speed 0.1231siter; left time 1588.4687s
+	iters 2700, epoch 16  loss -4.8920031
+	  - Classification 0.1801576
+	  - Domain 0.6425672
+	  - VQ 0.0000032
+	  - Reconstruction 64.2205353
+	  - Contrastive 6.4256716
+	  - Alpha 0.9989
+	speed 0.1232siter; left time 1577.0021s
+	iters 2800, epoch 16  loss -4.8677883
+	  - Classification 0.1799926
+	  - Domain 0.6373489
+	  - VQ 0.0000039
+	  - Reconstruction 67.4274750
+	  - Contrastive 6.3734894
+	  - Alpha 0.9989
+	speed 0.1234siter; left time 1567.7830s
+	iters 2900, epoch 16  loss -5.0957499
+	  - Classification 0.1689321
+	  - Domain 0.6432189
+	  - VQ 0.0000035
+	  - Reconstruction 56.7048492
+	  - Contrastive 6.4321885
+	  - Alpha 0.9989
+	speed 0.1235siter; left time 1556.8187s
+	iters 3000, epoch 16  loss -4.7565851
+	  - Classification 0.1743899
+	  - Domain 0.6498110
+	  - VQ 0.0000036
+	  - Reconstruction 77.5797195
+	  - Contrastive 6.4981103
+	  - Alpha 0.9989
+	speed 0.1235siter; left time 1543.5009s
+	iters 3100, epoch 16  loss -4.8375273
+	  - Classification 0.1799859
+	  - Domain 0.6537865
+	  - VQ 0.0000035
+	  - Reconstruction 70.3517227
+	  - Contrastive 6.5378647
+	  - Alpha 0.9989
+	speed 0.1235siter; left time 1532.1276s
+Epoch 16 cost time 382.21298122406006
+Epoch 16, Steps 3100  Train Loss -4.6348537 Vali Loss -6.3943241 Test Loss -6.5092080
+Vali Accuracy 0.5583 Test Accuracy 0.6292
+Validation metric decreased (-6.394324 -- -6.394324). Saving model ...
+	iters 100, epoch 17  loss -4.6877193
+	  - Classification 0.1743618
+	  - Domain 0.6506342
+	  - VQ 0.0000045
+	  - Reconstruction 83.5218353
+	  - Contrastive 6.5063424
+	  - Alpha 0.9993
+	speed 1.0254siter; left time 12613.9126s
+	iters 200, epoch 17  loss -4.9541821
+	  - Classification 0.1744244
+	  - Domain 0.6636138
+	  - VQ 0.0000034
+	  - Reconstruction 65.2547150
+	  - Contrastive 6.6361380
+	  - Alpha 0.9993
+	speed 0.1233siter; left time 1504.3777s
+	iters 300, epoch 17  loss -5.0372486
+	  - Classification 0.1633685
+	  - Domain 0.6528741
+	  - VQ 0.0000041
+	  - Reconstruction 66.3425446
+	  - Contrastive 6.5287409
+	  - Alpha 0.9993
+	speed 0.1234siter; left time 1493.1812s
+	iters 400, epoch 17  loss -5.0672441
+	  - Classification 0.1743356
+	  - Domain 0.6237819
+	  - VQ 0.0000038
+	  - Reconstruction 67.8765411
+	  - Contrastive 6.2378182
+	  - Alpha 0.9993
+	speed 0.1234siter; left time 1480.4123s
+	iters 500, epoch 17  loss -5.0541439
+	  - Classification 0.1799708
+	  - Domain 0.6177647
+	  - VQ 0.0000041
+	  - Reconstruction 68.7207565
+	  - Contrastive 6.1776462
+	  - Alpha 0.9993
+	speed 0.1239siter; left time 1474.6270s
+	iters 600, epoch 17  loss -5.2243176
+	  - Classification 0.1574830
+	  - Domain 0.6184837
+	  - VQ 0.0000035
+	  - Reconstruction 67.9911804
+	  - Contrastive 6.1848373
+	  - Alpha 0.9993
+	speed 0.1236siter; left time 1458.2371s
+	iters 700, epoch 17  loss -5.0467987
+	  - Classification 0.1522506
+	  - Domain 0.6088768
+	  - VQ 0.0000045
+	  - Reconstruction 84.2232285
+	  - Contrastive 6.0887675
+	  - Alpha 0.9993
+	speed 0.1233siter; left time 1443.1368s
+	iters 800, epoch 17  loss -5.0636649
+	  - Classification 0.1630667
+	  - Domain 0.6140612
+	  - VQ 0.0000049
+	  - Reconstruction 77.9987488
+	  - Contrastive 6.1406121
+	  - Alpha 0.9993
+	speed 0.1231siter; left time 1428.0854s
+	iters 900, epoch 17  loss -5.1157227
+	  - Classification 0.1857573
+	  - Domain 0.6176500
+	  - VQ 0.0000038
+	  - Reconstruction 67.6136856
+	  - Contrastive 6.1764994
+	  - Alpha 0.9993
+	speed 0.1233siter; left time 1417.5330s
+	iters 1000, epoch 17  loss -5.1536741
+	  - Classification 0.1743930
+	  - Domain 0.6165685
+	  - VQ 0.0000043
+	  - Reconstruction 70.1634521
+	  - Contrastive 6.1656847
+	  - Alpha 0.9993
+	speed 0.1237siter; left time 1410.0829s
+	iters 1100, epoch 17  loss -5.3434277
+	  - Classification 0.1690159
+	  - Domain 0.6219150
+	  - VQ 0.0000043
+	  - Reconstruction 59.1652031
+	  - Contrastive 6.2191496
+	  - Alpha 0.9993
+	speed 0.1236siter; left time 1396.6760s
+	iters 1200, epoch 17  loss -5.2093925
+	  - Classification 0.1742806
+	  - Domain 0.6124833
+	  - VQ 0.0000050
+	  - Reconstruction 68.3408585
+	  - Contrastive 6.1248331
+	  - Alpha 0.9993
+	speed 0.1236siter; left time 1384.4954s
+	iters 1300, epoch 17  loss -5.3249192
+	  - Classification 0.1639539
+	  - Domain 0.6182715
+	  - VQ 0.0000048
+	  - Reconstruction 64.7528458
+	  - Contrastive 6.1827154
+	  - Alpha 0.9993
+	speed 0.1237siter; left time 1373.6977s
+	iters 1400, epoch 17  loss -5.3960490
+	  - Classification 0.1637062
+	  - Domain 0.6181471
+	  - VQ 0.0000043
+	  - Reconstruction 62.1548882
+	  - Contrastive 6.1814704
+	  - Alpha 0.9993
+	speed 0.1240siter; left time 1364.1163s
+	iters 1500, epoch 17  loss -4.8947339
+	  - Classification 0.1730410
+	  - Domain 0.7023794
+	  - VQ 0.0000045
+	  - Reconstruction 75.6838379
+	  - Contrastive 7.0237937
+	  - Alpha 0.9993
+	speed 0.1235siter; left time 1346.0269s
+	iters 1600, epoch 17  loss -5.1356239
+	  - Classification 0.1690336
+	  - Domain 0.6849292
+	  - VQ 0.0000032
+	  - Reconstruction 68.3166351
+	  - Contrastive 6.8492918
+	  - Alpha 0.9993
+	speed 0.1237siter; left time 1335.8527s
+	iters 1700, epoch 17  loss -5.2896018
+	  - Classification 0.1640315
+	  - Domain 0.6611668
+	  - VQ 0.0000031
+	  - Reconstruction 66.0036469
+	  - Contrastive 6.6116676
+	  - Alpha 0.9993
+	speed 0.1240siter; left time 1326.5217s
+	iters 1800, epoch 17  loss -5.3467760
+	  - Classification 0.1591620
+	  - Domain 0.6259091
+	  - VQ 0.0000041
+	  - Reconstruction 70.7614365
+	  - Contrastive 6.2590909
+	  - Alpha 0.9993
+	speed 0.1232siter; left time 1306.3330s
+	iters 1900, epoch 17  loss -5.1728992
+	  - Classification 0.1792806
+	  - Domain 0.6250879
+	  - VQ 0.0000045
+	  - Reconstruction 75.3140640
+	  - Contrastive 6.2508788
+	  - Alpha 0.9993
+	speed 0.1234siter; left time 1295.9281s
+	iters 2000, epoch 17  loss -5.3805623
+	  - Classification 0.1742322
+	  - Domain 0.6196989
+	  - VQ 0.0000045
+	  - Reconstruction 65.2959747
+	  - Contrastive 6.1969886
+	  - Alpha 0.9993
+	speed 0.1233siter; left time 1282.8598s
+	iters 2100, epoch 17  loss -5.3384161
+	  - Classification 0.1793391
+	  - Domain 0.6301616
+	  - VQ 0.0000041
+	  - Reconstruction 65.9497757
+	  - Contrastive 6.3016157
+	  - Alpha 0.9993
+	speed 0.1234siter; left time 1271.2047s
+	iters 2200, epoch 17  loss -5.3548336
+	  - Classification 0.1690117
+	  - Domain 0.6322618
+	  - VQ 0.0000038
+	  - Reconstruction 70.4003906
+	  - Contrastive 6.3226180
+	  - Alpha 0.9993
+	speed 0.1231siter; left time 1255.9520s
+	iters 2300, epoch 17  loss -5.3817940
+	  - Classification 0.1796298
+	  - Domain 0.6270890
+	  - VQ 0.0000042
+	  - Reconstruction 65.7618408
+	  - Contrastive 6.2708893
+	  - Alpha 0.9993
+	speed 0.1232siter; left time 1244.7859s
+	iters 2400, epoch 17  loss -5.4233208
+	  - Classification 0.1743778
+	  - Domain 0.6323125
+	  - VQ 0.0000038
+	  - Reconstruction 65.9069443
+	  - Contrastive 6.3231244
+	  - Alpha 0.9993
+	speed 0.1233siter; left time 1233.5376s
+	iters 2500, epoch 17  loss -5.4866724
+	  - Classification 0.1572572
+	  - Domain 0.6254092
+	  - VQ 0.0000039
+	  - Reconstruction 70.8831100
+	  - Contrastive 6.2540917
+	  - Alpha 0.9993
+	speed 0.1239siter; left time 1227.0377s
+	iters 2600, epoch 17  loss -5.4496813
+	  - Classification 0.1687187
+	  - Domain 0.6337221
+	  - VQ 0.0000038
+	  - Reconstruction 68.3674545
+	  - Contrastive 6.3372207
+	  - Alpha 0.9993
+	speed 0.1234siter; left time 1209.4288s
+	iters 2700, epoch 17  loss -5.5356283
+	  - Classification 0.1687673
+	  - Domain 0.6302613
+	  - VQ 0.0000039
+	  - Reconstruction 64.1977844
+	  - Contrastive 6.3026128
+	  - Alpha 0.9993
+	speed 0.1239siter; left time 1202.0929s
+	iters 2800, epoch 17  loss -5.7118053
+	  - Classification 0.1571438
+	  - Domain 0.6326525
+	  - VQ 0.0000034
+	  - Reconstruction 58.3643074
+	  - Contrastive 6.3265243
+	  - Alpha 0.9993
+	speed 0.1235siter; left time 1185.7991s
+	iters 2900, epoch 17  loss -5.4138060
+	  - Classification 0.1803593
+	  - Domain 0.6264068
+	  - VQ 0.0000044
+	  - Reconstruction 69.8451309
+	  - Contrastive 6.2640686
+	  - Alpha 0.9993
+	speed 0.1239siter; left time 1177.0169s
+	iters 3000, epoch 17  loss -5.4164119
+	  - Classification 0.1687512
+	  - Domain 0.6246195
+	  - VQ 0.0000038
+	  - Reconstruction 77.3409271
+	  - Contrastive 6.2461953
+	  - Alpha 0.9993
+	speed 0.1235siter; left time 1161.0808s
+	iters 3100, epoch 17  loss -5.6226988
+	  - Classification 0.1744599
+	  - Domain 0.6245881
+	  - VQ 0.0000038
+	  - Reconstruction 61.9906044
+	  - Contrastive 6.2458811
+	  - Alpha 0.9993
+	speed 0.1234siter; left time 1147.5076s
+Epoch 17 cost time 383.06129002571106
+Epoch 17, Steps 3100  Train Loss -5.2338518 Vali Loss -6.9750005 Test Loss -7.0946474
+Vali Accuracy 0.5583 Test Accuracy 0.6292
+Validation metric decreased (-6.975000 -- -6.975000). Saving model ...
+	iters 100, epoch 18  loss -5.7073441
+	  - Classification 0.1744656
+	  - Domain 0.6286454
+	  - VQ 0.0000031
+	  - Reconstruction 58.3180275
+	  - Contrastive 6.2864537
+	  - Alpha 0.9996
+	speed 1.0263siter; left time 9442.8524s
+	iters 200, epoch 18  loss -5.3636904
+	  - Classification 0.1859193
+	  - Domain 0.6327686
+	  - VQ 0.0000034
+	  - Reconstruction 76.9069061
+	  - Contrastive 6.3276858
+	  - Alpha 0.9996
+	speed 0.1233siter; left time 1121.8128s
+	iters 300, epoch 18  loss -5.4515667
+	  - Classification 0.1574973
+	  - Domain 0.6294259
+	  - VQ 0.0000033
+	  - Reconstruction 84.4267654
+	  - Contrastive 6.2942595
+	  - Alpha 0.9996
+	speed 0.1235siter; left time 1111.3637s
+	iters 400, epoch 18  loss -5.5604992
+	  - Classification 0.1797637
+	  - Domain 0.6271108
+	  - VQ 0.0000036
+	  - Reconstruction 68.6508942
+	  - Contrastive 6.2711082
+	  - Alpha 0.9996
+	speed 0.1234siter; left time 1098.0449s
+	iters 500, epoch 18  loss -5.7535663
+	  - Classification 0.1743718
+	  - Domain 0.6208773
+	  - VQ 0.0000036
+	  - Reconstruction 60.1897469
+	  - Contrastive 6.2087731
+	  - Alpha 0.9996
+	speed 0.1234siter; left time 1085.6708s
+	iters 600, epoch 18  loss -5.6129370
+	  - Classification 0.1797391
+	  - Domain 0.6253740
+	  - VQ 0.0000031
+	  - Reconstruction 69.3766785
+	  - Contrastive 6.2537398
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 1072.1795s
+	iters 700, epoch 18  loss -5.6844954
+	  - Classification 0.1799991
+	  - Domain 0.6286189
+	  - VQ 0.0000028
+	  - Reconstruction 65.5913086
+	  - Contrastive 6.2861891
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 1059.6940s
+	iters 800, epoch 18  loss -5.6637793
+	  - Classification 0.1800745
+	  - Domain 0.6298290
+	  - VQ 0.0000030
+	  - Reconstruction 67.3257141
+	  - Contrastive 6.2982898
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 1047.2209s
+	iters 900, epoch 18  loss -5.7930050
+	  - Classification 0.1631309
+	  - Domain 0.6182634
+	  - VQ 0.0000032
+	  - Reconstruction 68.4337311
+	  - Contrastive 6.1826334
+	  - Alpha 0.9996
+	speed 0.1233siter; left time 1035.6074s
+	iters 1000, epoch 18  loss -5.7488141
+	  - Classification 0.1802255
+	  - Domain 0.6224544
+	  - VQ 0.0000032
+	  - Reconstruction 64.8857727
+	  - Contrastive 6.2245440
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 1022.8261s
+	iters 1100, epoch 18  loss -5.7714462
+	  - Classification 0.1686965
+	  - Domain 0.6329629
+	  - VQ 0.0000026
+	  - Reconstruction 68.5812073
+	  - Contrastive 6.3296294
+	  - Alpha 0.9996
+	speed 0.1233siter; left time 1010.8976s
+	iters 1200, epoch 18  loss -5.6705232
+	  - Classification 0.1699879
+	  - Domain 0.6654896
+	  - VQ 0.0000029
+	  - Reconstruction 68.3412933
+	  - Contrastive 6.6548958
+	  - Alpha 0.9996
+	speed 0.1233siter; left time 999.1757s
+	iters 1300, epoch 18  loss -5.8392792
+	  - Classification 0.1688377
+	  - Domain 0.6410789
+	  - VQ 0.0000029
+	  - Reconstruction 63.3415604
+	  - Contrastive 6.4107890
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 985.3876s
+	iters 1400, epoch 18  loss -5.5461693
+	  - Classification 0.1651523
+	  - Domain 0.7236696
+	  - VQ 0.0000031
+	  - Reconstruction 68.2062912
+	  - Contrastive 7.2366958
+	  - Alpha 0.9996
+	speed 0.1234siter; left time 975.2837s
+	iters 1500, epoch 18  loss -5.7583961
+	  - Classification 0.1725311
+	  - Domain 0.6859668
+	  - VQ 0.0000027
+	  - Reconstruction 61.2320061
+	  - Contrastive 6.8596683
+	  - Alpha 0.9996
+	speed 0.1236siter; left time 964.1664s
+	iters 1600, epoch 18  loss -5.6549392
+	  - Classification 0.1613913
+	  - Domain 0.6711581
+	  - VQ 0.0000032
+	  - Reconstruction 75.4187698
+	  - Contrastive 6.7115812
+	  - Alpha 0.9996
+	speed 0.1238siter; left time 953.5576s
+	iters 1700, epoch 18  loss -5.8699255
+	  - Classification 0.1569425
+	  - Domain 0.6703849
+	  - VQ 0.0000040
+	  - Reconstruction 60.6571846
+	  - Contrastive 6.7038488
+	  - Alpha 0.9996
+	speed 0.1240siter; left time 942.8356s
+	iters 1800, epoch 18  loss -5.6123977
+	  - Classification 0.1743556
+	  - Domain 0.6616287
+	  - VQ 0.0000045
+	  - Reconstruction 72.3507462
+	  - Contrastive 6.6162872
+	  - Alpha 0.9996
+	speed 0.1240siter; left time 930.4830s
+	iters 1900, epoch 18  loss -5.6390572
+	  - Classification 0.1744679
+	  - Domain 0.6526746
+	  - VQ 0.0000051
+	  - Reconstruction 70.9889450
+	  - Contrastive 6.5267463
+	  - Alpha 0.9996
+	speed 0.1241siter; left time 918.7379s
+	iters 2000, epoch 18  loss -5.4930310
+	  - Classification 0.1805856
+	  - Domain 0.6528941
+	  - VQ 0.0000046
+	  - Reconstruction 81.6323700
+	  - Contrastive 6.5289407
+	  - Alpha 0.9996
+	speed 0.1241siter; left time 906.2325s
+	iters 2100, epoch 18  loss -5.6050110
+	  - Classification 0.1749492
+	  - Domain 0.6719562
+	  - VQ 0.0000053
+	  - Reconstruction 70.3416138
+	  - Contrastive 6.7195616
+	  - Alpha 0.9996
+	speed 0.1241siter; left time 893.3627s
+	iters 2200, epoch 18  loss -5.7540107
+	  - Classification 0.1687458
+	  - Domain 0.6533359
+	  - VQ 0.0000049
+	  - Reconstruction 68.7528687
+	  - Contrastive 6.5333591
+	  - Alpha 0.9996
+	speed 0.1240siter; left time 880.7039s
+	iters 2300, epoch 18  loss -5.9140511
+	  - Classification 0.1687261
+	  - Domain 0.6576619
+	  - VQ 0.0000043
+	  - Reconstruction 60.1000519
+	  - Contrastive 6.5766191
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 862.3209s
+	iters 2400, epoch 18  loss -5.7982688
+	  - Classification 0.1854765
+	  - Domain 0.6321233
+	  - VQ 0.0000054
+	  - Reconstruction 63.1562958
+	  - Contrastive 6.3212328
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 850.3205s
+	iters 2500, epoch 18  loss -5.8586516
+	  - Classification 0.1743604
+	  - Domain 0.6238973
+	  - VQ 0.0000064
+	  - Reconstruction 62.2116661
+	  - Contrastive 6.2389731
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 837.7492s
+	iters 2600, epoch 18  loss -5.8926287
+	  - Classification 0.1742662
+	  - Domain 0.6236227
+	  - VQ 0.0000062
+	  - Reconstruction 61.4029427
+	  - Contrastive 6.2362266
+	  - Alpha 0.9996
+	speed 0.1233siter; left time 826.2444s
+	iters 2700, epoch 18  loss -5.8521643
+	  - Classification 0.1591071
+	  - Domain 0.6215577
+	  - VQ 0.0000069
+	  - Reconstruction 68.6058731
+	  - Contrastive 6.2155762
+	  - Alpha 0.9996
+	speed 0.1233siter; left time 814.1354s
+	iters 2800, epoch 18  loss -5.8589783
+	  - Classification 0.1741386
+	  - Domain 0.6178330
+	  - VQ 0.0000063
+	  - Reconstruction 66.0812988
+	  - Contrastive 6.1783299
+	  - Alpha 0.9996
+	speed 0.1234siter; left time 802.2278s
+	iters 2900, epoch 18  loss -5.7883930
+	  - Classification 0.1641724
+	  - Domain 0.6094032
+	  - VQ 0.0000068
+	  - Reconstruction 75.4290085
+	  - Contrastive 6.0940318
+	  - Alpha 0.9996
+	speed 0.1233siter; left time 789.1498s
+	iters 3000, epoch 18  loss -5.7939897
+	  - Classification 0.1533681
+	  - Domain 0.6143212
+	  - VQ 0.0000073
+	  - Reconstruction 76.5970764
+	  - Contrastive 6.1432123
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 776.4229s
+	iters 3100, epoch 18  loss -5.9883084
+	  - Classification 0.1794856
+	  - Domain 0.6077594
+	  - VQ 0.0000069
+	  - Reconstruction 56.6364594
+	  - Contrastive 6.0775933
+	  - Alpha 0.9996
+	speed 0.1232siter; left time 764.1678s
+Epoch 18 cost time 382.91925621032715
+Epoch 18, Steps 3100  Train Loss -5.6938676 Vali Loss -7.2316237 Test Loss -7.3514644
+Vali Accuracy 0.5583 Test Accuracy 0.6292
+Validation metric decreased (-7.231624 -- -7.231624). Saving model ...
+	iters 100, epoch 19  loss -5.8563457
+	  - Classification 0.1794391
+	  - Domain 0.6098709
+	  - VQ 0.0000071
+	  - Reconstruction 64.8923492
+	  - Contrastive 6.0987091
+	  - Alpha 0.9998
+	speed 1.0249siter; left time 6252.6577s
+	iters 200, epoch 19  loss -5.7990642
+	  - Classification 0.1685190
+	  - Domain 0.6329702
+	  - VQ 0.0000074
+	  - Reconstruction 67.1959610
+	  - Contrastive 6.3297014
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 740.0897s
+	iters 300, epoch 19  loss -5.7880850
+	  - Classification 0.1749797
+	  - Domain 0.6152187
+	  - VQ 0.0000089
+	  - Reconstruction 62.7248421
+	  - Contrastive 6.1521869
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 727.1620s
+	iters 400, epoch 19  loss -5.5217748
+	  - Classification 0.1742926
+	  - Domain 0.6159469
+	  - VQ 0.0000092
+	  - Reconstruction 79.8451538
+	  - Contrastive 6.1594696
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 714.7596s
+	iters 500, epoch 19  loss -5.6658440
+	  - Classification 0.1748297
+	  - Domain 0.6290910
+	  - VQ 0.0000072
+	  - Reconstruction 76.7627029
+	  - Contrastive 6.2909102
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 702.8186s
+	iters 600, epoch 19  loss -5.8195539
+	  - Classification 0.1796849
+	  - Domain 0.6607766
+	  - VQ 0.0000066
+	  - Reconstruction 61.1004448
+	  - Contrastive 6.6077652
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 690.1680s
+	iters 700, epoch 19  loss -5.6221185
+	  - Classification 0.1636724
+	  - Domain 0.6405200
+	  - VQ 0.0000077
+	  - Reconstruction 80.5818176
+	  - Contrastive 6.4051995
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 678.1434s
+	iters 800, epoch 19  loss -6.0305433
+	  - Classification 0.1689536
+	  - Domain 0.6297857
+	  - VQ 0.0000053
+	  - Reconstruction 65.3954086
+	  - Contrastive 6.2978568
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 665.8227s
+	iters 900, epoch 19  loss -5.9876299
+	  - Classification 0.1689689
+	  - Domain 0.6148963
+	  - VQ 0.0000064
+	  - Reconstruction 66.8865128
+	  - Contrastive 6.1489630
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 653.7941s
+	iters 1000, epoch 19  loss -5.7542181
+	  - Classification 0.1743140
+	  - Domain 0.6106983
+	  - VQ 0.0000079
+	  - Reconstruction 74.2045288
+	  - Contrastive 6.1069832
+	  - Alpha 0.9998
+	speed 0.1231siter; left time 640.3686s
+	iters 1100, epoch 19  loss -5.9671450
+	  - Classification 0.1743308
+	  - Domain 0.6121525
+	  - VQ 0.0000056
+	  - Reconstruction 72.1836243
+	  - Contrastive 6.1215253
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 628.8941s
+	iters 1200, epoch 19  loss -6.0373874
+	  - Classification 0.1799861
+	  - Domain 0.6067578
+	  - VQ 0.0000057
+	  - Reconstruction 66.4664078
+	  - Contrastive 6.0675778
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 616.1624s
+	iters 1300, epoch 19  loss -6.1418037
+	  - Classification 0.1580364
+	  - Domain 0.6076595
+	  - VQ 0.0000055
+	  - Reconstruction 69.5965881
+	  - Contrastive 6.0765953
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 604.3947s
+	iters 1400, epoch 19  loss -6.2157393
+	  - Classification 0.1688106
+	  - Domain 0.6080056
+	  - VQ 0.0000058
+	  - Reconstruction 59.0235786
+	  - Contrastive 6.0800557
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 591.4429s
+	iters 1500, epoch 19  loss -6.0293059
+	  - Classification 0.1687919
+	  - Domain 0.6073934
+	  - VQ 0.0000062
+	  - Reconstruction 70.6319199
+	  - Contrastive 6.0739336
+	  - Alpha 0.9998
+	speed 0.1231siter; left time 578.8322s
+	iters 1600, epoch 19  loss -6.0544076
+	  - Classification 0.1744562
+	  - Domain 0.6081014
+	  - VQ 0.0000061
+	  - Reconstruction 67.3523178
+	  - Contrastive 6.0810142
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 566.6275s
+	iters 1700, epoch 19  loss -6.0002232
+	  - Classification 0.1860069
+	  - Domain 0.6055335
+	  - VQ 0.0000071
+	  - Reconstruction 61.7112579
+	  - Contrastive 6.0553350
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 554.5990s
+	iters 1800, epoch 19  loss -5.9832878
+	  - Classification 0.1853215
+	  - Domain 0.6061457
+	  - VQ 0.0000066
+	  - Reconstruction 66.3012085
+	  - Contrastive 6.0614572
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 542.2062s
+	iters 1900, epoch 19  loss -6.1934009
+	  - Classification 0.1743092
+	  - Domain 0.6039053
+	  - VQ 0.0000065
+	  - Reconstruction 58.2561035
+	  - Contrastive 6.0390525
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 530.0261s
+	iters 2000, epoch 19  loss -6.0007339
+	  - Classification 0.1689784
+	  - Domain 0.6051198
+	  - VQ 0.0000069
+	  - Reconstruction 71.0572739
+	  - Contrastive 6.0511975
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 517.5018s
+	iters 2100, epoch 19  loss -6.1578221
+	  - Classification 0.1587561
+	  - Domain 0.6084755
+	  - VQ 0.0000060
+	  - Reconstruction 69.8730469
+	  - Contrastive 6.0847549
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 505.2058s
+	iters 2200, epoch 19  loss -6.2033463
+	  - Classification 0.1742913
+	  - Domain 0.6120273
+	  - VQ 0.0000054
+	  - Reconstruction 64.0107117
+	  - Contrastive 6.1202731
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 492.8023s
+	iters 2300, epoch 19  loss -5.9547272
+	  - Classification 0.1792840
+	  - Domain 0.6103489
+	  - VQ 0.0000064
+	  - Reconstruction 73.4359512
+	  - Contrastive 6.1034894
+	  - Alpha 0.9998
+	speed 0.1231siter; left time 480.3235s
+	iters 2400, epoch 19  loss -5.9434242
+	  - Classification 0.1599064
+	  - Domain 0.6073064
+	  - VQ 0.0000082
+	  - Reconstruction 71.0637207
+	  - Contrastive 6.0730634
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 468.1546s
+	iters 2500, epoch 19  loss -5.9640508
+	  - Classification 0.1790772
+	  - Domain 0.6081101
+	  - VQ 0.0000076
+	  - Reconstruction 66.0552902
+	  - Contrastive 6.0811005
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 455.8298s
+	iters 2600, epoch 19  loss -5.9445591
+	  - Classification 0.1844109
+	  - Domain 0.6040502
+	  - VQ 0.0000068
+	  - Reconstruction 71.8981934
+	  - Contrastive 6.0405016
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 443.7253s
+	iters 2700, epoch 19  loss -6.0576196
+	  - Classification 0.1690631
+	  - Domain 0.6044574
+	  - VQ 0.0000066
+	  - Reconstruction 71.4742584
+	  - Contrastive 6.0445738
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 431.5508s
+	iters 2800, epoch 19  loss -5.9161949
+	  - Classification 0.1742699
+	  - Domain 0.6003616
+	  - VQ 0.0000079
+	  - Reconstruction 71.2865982
+	  - Contrastive 6.0036159
+	  - Alpha 0.9998
+	speed 0.1237siter; left time 420.6785s
+	iters 2900, epoch 19  loss -6.1088061
+	  - Classification 0.1847751
+	  - Domain 0.6138892
+	  - VQ 0.0000057
+	  - Reconstruction 66.8865662
+	  - Contrastive 6.1388917
+	  - Alpha 0.9998
+	speed 0.1240siter; left time 409.2128s
+	iters 3000, epoch 19  loss -6.0670471
+	  - Classification 0.1638829
+	  - Domain 0.6118988
+	  - VQ 0.0000065
+	  - Reconstruction 72.9561768
+	  - Contrastive 6.1189876
+	  - Alpha 0.9998
+	speed 0.1232siter; left time 394.3605s
+	iters 3100, epoch 19  loss -6.2430267
+	  - Classification 0.1689265
+	  - Domain 0.6090927
+	  - VQ 0.0000063
+	  - Reconstruction 61.7121353
+	  - Contrastive 6.0909266
+	  - Alpha 0.9998
+	speed 0.1233siter; left time 382.3103s
+Epoch 19 cost time 382.289822101593
+Epoch 19, Steps 3100  Train Loss -5.9582410 Vali Loss -7.5273897 Test Loss -7.6534171
+Vali Accuracy 0.5583 Test Accuracy 0.6292
+Validation metric decreased (-7.527390 -- -7.527390). Saving model ...
+	iters 100, epoch 20  loss -6.0741568
+	  - Classification 0.1636261
+	  - Domain 0.6027886
+	  - VQ 0.0000067
+	  - Reconstruction 73.7251358
+	  - Contrastive 6.0278854
+	  - Alpha 0.9999
+	speed 1.0273siter; left time 3082.9366s
+	iters 200, epoch 20  loss -6.1748323
+	  - Classification 0.1743023
+	  - Domain 0.6052521
+	  - VQ 0.0000056
+	  - Reconstruction 70.8971558
+	  - Contrastive 6.0525212
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 357.3741s
+	iters 300, epoch 20  loss -6.2009315
+	  - Classification 0.1637711
+	  - Domain 0.6022106
+	  - VQ 0.0000067
+	  - Reconstruction 66.1905212
+	  - Contrastive 6.0221057
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 345.1809s
+	iters 400, epoch 20  loss -6.1063337
+	  - Classification 0.1742502
+	  - Domain 0.6042627
+	  - VQ 0.0000063
+	  - Reconstruction 71.5044022
+	  - Contrastive 6.0426269
+	  - Alpha 0.9999
+	speed 0.1234siter; left time 333.2178s
+	iters 500, epoch 20  loss -6.3016825
+	  - Classification 0.1640556
+	  - Domain 0.6057748
+	  - VQ 0.0000055
+	  - Reconstruction 68.5637131
+	  - Contrastive 6.0577483
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 320.7102s
+	iters 600, epoch 20  loss -6.3788705
+	  - Classification 0.1587063
+	  - Domain 0.6066685
+	  - VQ 0.0000058
+	  - Reconstruction 63.0071144
+	  - Contrastive 6.0666847
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 308.4642s
+	iters 700, epoch 20  loss -6.3063493
+	  - Classification 0.1848317
+	  - Domain 0.6133958
+	  - VQ 0.0000054
+	  - Reconstruction 59.5563545
+	  - Contrastive 6.1339579
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 295.8346s
+	iters 800, epoch 20  loss -6.3095188
+	  - Classification 0.1742073
+	  - Domain 0.6131936
+	  - VQ 0.0000052
+	  - Reconstruction 65.5707092
+	  - Contrastive 6.1319361
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 283.5574s
+	iters 900, epoch 20  loss -6.1324787
+	  - Classification 0.1791824
+	  - Domain 0.6129414
+	  - VQ 0.0000051
+	  - Reconstruction 77.2513351
+	  - Contrastive 6.1294146
+	  - Alpha 0.9999
+	speed 0.1235siter; left time 271.7555s
+	iters 1000, epoch 20  loss -6.3193450
+	  - Classification 0.1789806
+	  - Domain 0.6182076
+	  - VQ 0.0000044
+	  - Reconstruction 70.1921616
+	  - Contrastive 6.1820765
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 259.1523s
+	iters 1100, epoch 20  loss -6.2817297
+	  - Classification 0.1843362
+	  - Domain 0.6164019
+	  - VQ 0.0000045
+	  - Reconstruction 71.1650238
+	  - Contrastive 6.1640182
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 246.5689s
+	iters 1200, epoch 20  loss -6.5851583
+	  - Classification 0.1592108
+	  - Domain 0.6172134
+	  - VQ 0.0000040
+	  - Reconstruction 65.0767365
+	  - Contrastive 6.1721344
+	  - Alpha 0.9999
+	speed 0.1235siter; left time 234.7437s
+	iters 1300, epoch 20  loss -6.4400682
+	  - Classification 0.1841122
+	  - Domain 0.6194497
+	  - VQ 0.0000039
+	  - Reconstruction 66.0333862
+	  - Contrastive 6.1944971
+	  - Alpha 0.9999
+	speed 0.1234siter; left time 222.2296s
+	iters 1400, epoch 20  loss -6.3646526
+	  - Classification 0.1742199
+	  - Domain 0.6192763
+	  - VQ 0.0000041
+	  - Reconstruction 74.7240601
+	  - Contrastive 6.1927629
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 209.6636s
+	iters 1500, epoch 20  loss -6.4924765
+	  - Classification 0.1690166
+	  - Domain 0.6274950
+	  - VQ 0.0000036
+	  - Reconstruction 71.1739960
+	  - Contrastive 6.2749496
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 197.2782s
+	iters 1600, epoch 20  loss -6.5678077
+	  - Classification 0.1535154
+	  - Domain 0.6259114
+	  - VQ 0.0000038
+	  - Reconstruction 71.4916000
+	  - Contrastive 6.2591143
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 185.0024s
+	iters 1700, epoch 20  loss -6.6753035
+	  - Classification 0.1742260
+	  - Domain 0.6230438
+	  - VQ 0.0000030
+	  - Reconstruction 65.1697006
+	  - Contrastive 6.2304382
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 172.5505s
+	iters 1800, epoch 20  loss -6.3771486
+	  - Classification 0.1840806
+	  - Domain 0.6186315
+	  - VQ 0.0000037
+	  - Reconstruction 76.4033890
+	  - Contrastive 6.1863151
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 160.3167s
+	iters 1900, epoch 20  loss -6.6277218
+	  - Classification 0.1788641
+	  - Domain 0.6176053
+	  - VQ 0.0000031
+	  - Reconstruction 68.6995926
+	  - Contrastive 6.1760526
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 148.0500s
+	iters 2000, epoch 20  loss -6.7830706
+	  - Classification 0.1692768
+	  - Domain 0.6173827
+	  - VQ 0.0000029
+	  - Reconstruction 64.2688904
+	  - Contrastive 6.1738272
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 135.7184s
+	iters 2100, epoch 20  loss -6.6630993
+	  - Classification 0.1741233
+	  - Domain 0.6154659
+	  - VQ 0.0000034
+	  - Reconstruction 66.9242020
+	  - Contrastive 6.1546588
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 123.2922s
+	iters 2200, epoch 20  loss -6.6997910
+	  - Classification 0.1742100
+	  - Domain 0.6126754
+	  - VQ 0.0000032
+	  - Reconstruction 67.7687378
+	  - Contrastive 6.1267543
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 110.9766s
+	iters 2300, epoch 20  loss -6.7006259
+	  - Classification 0.1691733
+	  - Domain 0.6151469
+	  - VQ 0.0000034
+	  - Reconstruction 67.7630844
+	  - Contrastive 6.1514688
+	  - Alpha 0.9999
+	speed 0.1234siter; left time 98.8080s
+	iters 2400, epoch 20  loss -6.5207748
+	  - Classification 0.1690647
+	  - Domain 0.6095802
+	  - VQ 0.0000034
+	  - Reconstruction 81.6681824
+	  - Contrastive 6.0958018
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 86.4256s
+	iters 2500, epoch 20  loss -6.8297653
+	  - Classification 0.1689746
+	  - Domain 0.6046441
+	  - VQ 0.0000031
+	  - Reconstruction 65.2866135
+	  - Contrastive 6.0464406
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 74.0438s
+	iters 2600, epoch 20  loss -6.8666759
+	  - Classification 0.1690145
+	  - Domain 0.6062655
+	  - VQ 0.0000033
+	  - Reconstruction 61.3050995
+	  - Contrastive 6.0626554
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 61.7028s
+	iters 2700, epoch 20  loss -6.7362461
+	  - Classification 0.1744217
+	  - Domain 0.6027885
+	  - VQ 0.0000030
+	  - Reconstruction 72.2399216
+	  - Contrastive 6.0278850
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 49.3962s
+	iters 2800, epoch 20  loss -6.6709638
+	  - Classification 0.1854496
+	  - Domain 0.6001252
+	  - VQ 0.0000037
+	  - Reconstruction 65.2439880
+	  - Contrastive 6.0012517
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 37.1109s
+	iters 2900, epoch 20  loss -6.7840581
+	  - Classification 0.1751226
+	  - Domain 0.6001078
+	  - VQ 0.0000035
+	  - Reconstruction 64.0675888
+	  - Contrastive 6.0010781
+	  - Alpha 0.9999
+	speed 0.1233siter; left time 24.7761s
+	iters 3000, epoch 20  loss -6.7479825
+	  - Classification 0.1672476
+	  - Domain 0.5987439
+	  - VQ 0.0000033
+	  - Reconstruction 73.1676407
+	  - Contrastive 5.9874392
+	  - Alpha 0.9999
+	speed 0.1232siter; left time 12.4434s
+	iters 3100, epoch 20  loss -6.6431704
+	  - Classification 0.1805363
+	  - Domain 0.5996558
+	  - VQ 0.0000032
+	  - Reconstruction 76.3794785
+	  - Contrastive 5.9965577
+	  - Alpha 0.9999
+	speed 0.1231siter; left time 0.1231s
+Epoch 20 cost time 382.28052139282227
+Epoch 20, Steps 3100  Train Loss -6.4962951 Vali Loss -8.2015129 Test Loss -8.3425549
+Vali Accuracy 0.5583 Test Accuracy 0.6292
+Validation metric decreased (-8.201513 -- -8.201513). Saving model ...
+Traceback (most recent call last)
+  File contentEEG-LLM917timellmrun_main_with_reconstruction.py, line 203, in module
+    main()
+  File contentEEG-LLM917timellmrun_main_with_reconstruction.py, line 183, in main
+    exp.train(setting)
+  File contentEEG-LLM917timellmexpexp_classification_vq.py, line 325, in train
+    self.model.load_state_dict(torch.load(best_model_path))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File usrlocallibpython3.12dist-packagestorchserialization.py, line 998, in load
+    with _open_file_like(f, 'rb') as opened_file
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File usrlocallibpython3.12dist-packagestorchserialization.py, line 445, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File usrlocallibpython3.12dist-packagestorchserialization.py, line 426, in __init__
+    super().__init__(open(name, mode))
+                     ^^^^^^^^^^^^^^^^
+FileNotFoundError [Errno 2] No such file or directory '.checkpointsDEAP_EEGLLM_VQ_EEGLLM_VQ_DEAP_256_0checkpoint.pth'
