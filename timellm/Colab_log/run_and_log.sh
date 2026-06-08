@@ -25,6 +25,8 @@ RUN_SCRIPT="${2:-run_deap_vq.sh}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # .../timellm/Colab_log
 TIMELLM_DIR="$(dirname "$SCRIPT_DIR")"                        # .../timellm
+# Colab 容器里 clone 的 repo 常被 git 判为 dubious ownership（任何 git 操作报 exit 128），先放行
+git config --global --add safe.directory '*' 2>/dev/null || true
 REPO_DIR="$(git -C "$TIMELLM_DIR" rev-parse --show-toplevel)"
 
 DATETIME="$(date +%Y%m%d-%H%M)"
