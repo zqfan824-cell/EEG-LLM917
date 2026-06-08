@@ -296,10 +296,15 @@ class EEGLLM_VQ(EEGLLMBase):
             }
         
         # 5. 重编程层处理
+        #    先用 mapping_layer 把 50257 个词向量降到 num_tokens(=1000) 个可训练"文本原型"，
+        #    再做重编程——与基类 EEGLLM 一致。之前直接传整个 word_embeddings：源 token 多 50x，
+        #    既爆显存（reprogramming 的 scores ∝ 源 token 数），又丢掉了 mapping_layer 这个
+        #    关键可训练组件（很可能也是分类学不动的原因之一）。
+        source_embeddings = self.mapping_layer(self.word_embeddings.permute(1, 0)).permute(1, 0)
         prompt = self.reprogramming_layer(
-            quantized_for_reprog, 
-            self.word_embeddings, 
-            self.word_embeddings,
+            quantized_for_reprog,
+            source_embeddings,
+            source_embeddings,
             alpha=alpha,
             return_domain_loss=True
         )
