@@ -1,0 +1,233 @@
+# ===== RUN META =====
+# date:    2026-06-08 09:24:17 UTC
+# git:     f347646 (main)
+# host:    6097400547b1 / GPU: NVIDIA A100-SXM4-40GB
+# slug:    DEAP-val2__VQ-GPT2__diag-classonly
+# script:  run_deap_diag.sh
+# =====================
+
+=== EEGLLM_VQ 诊断 v2：关 VQ + 裸 CE，最简分类通路 ===
+/usr/local/lib/python3.12/dist-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+Args in experiment:
+Namespace(task_name='classification', is_training=1, model_id='DEAP_DIAG2', model='EEGLLM_VQ', data='DEAP', root_path='/content/drive/MyDrive/DEAP/', data_path='', features='M', target='OT', freq='h', checkpoints='./checkpoints/', seq_len=256, label_len=48, pred_len=96, seasonal_patterns='Monthly', enc_in=14, dec_in=32, c_out=32, d_model=32, n_heads=8, e_layers=2, d_layers=1, d_ff=128, moving_avg=25, factor=1, distil=True, dropout=0.1, embed='timeF', activation='gelu', output_attention=False, llm_model='GPT2', llm_dim=768, llm_layers=2, patch_len=16, stride=8, enable_vq=False, vq_embed_dim=128, vq_n_embed=8192, vq_beta=1.0, enable_reconstruction=False, use_smooth_l1=False, freq_weight=1.0, raw_weight=1.0, reconstruction_weight=0.5, enable_adversarial=True, domain_weight=0.0, contrastive_weight=0.0, contrastive_temp=0.1, alpha_schedule='constant', max_alpha=0.0, num_workers=10, itr=1, train_epochs=5, batch_size=64, patience=15, learning_rate=0.0001, des='Exp', loss='CrossEntropyLoss', use_adaptive_loss=False, lradj='type1', use_amp=False, n_class=2, classification_type='valence', channel_selection='comprehensive_emotion', use_channel_selection=True, use_gpu=True, gpu=0, use_multi_gpu=False, devices='0,1,2,3', seed=2021, num_class=2)
+Use GPU: cuda:0
+
+[EEGLLM] 初始化模型 - 任务类型: classification
+[ReprogrammingLayer] 启用域对抗学习:
+  - 域分类器输入维度: 768
+  - 域分类器隐藏维度: 256
+  - 域数量: 2 (EEG域 vs LLM域)
+[ClassificationHead] 初始化完成:
+  - 输入维度: 10752 (n_vars=14 × d_model=768)
+  - 输出类别: 2
+[EEGLLM] 分类任务配置:
+  - 类别数: 2
+  - 通道数: 14
+  - Patch数: 32
+[EEGLLM_VQ] 增强模态对抗学习:
+  - 深层域分类器: 768 -> 512 -> 256 -> 128 -> 2
+  - 模态对齐调度器: constant
+  - 对比学习温度: 0.1
+  - 使用LayerNorm和渐进Dropout正则化
+[EEGLLM_VQ] 初始化完成:
+  - VQ启用: False
+  - 重建损失启用: False
+[Exp_Classification_VQ] 初始化完成
+  - 设备: cuda:0
+  - 模型: EEGLLM_VQ
+  - VQ启用: False
+  - 重建损失启用: False
+  - 域对抗启用: True
+>>>>>>>start training : DEAP_DIAG2_EEGLLM_VQ_DEAP_256_0>>>>>>>>>>>>>>>>>>>>>>>>>>>
+使用通道选择策略: comprehensive_emotion
+选择的通道: Fp1, Fp2, F3, F4, F7, F8, T7, T8, C3, C4, P3, P4, O1, O2
+通道数量: 14
+正在加载DEAP train 数据集...
+DEAP train 数据集加载完成:
+  - 样本数: 24800
+  - 数据形状: (24800, 14, 256)
+  - 使用通道数: 14
+  - 标签分布: [11191 13609]
+  - 数据已标准化
+已更新模型输入通道数为: 14
+使用通道选择策略: comprehensive_emotion
+选择的通道: Fp1, Fp2, F3, F4, F7, F8, T7, T8, C3, C4, P3, P4, O1, O2
+通道数量: 14
+正在加载DEAP val 数据集...
+DEAP val 数据集加载完成:
+  - 样本数: 7440
+  - 数据形状: (7440, 14, 256)
+  - 使用通道数: 14
+  - 标签分布: [3286 4154]
+  - 数据已标准化
+已更新模型输入通道数为: 14
+使用通道选择策略: comprehensive_emotion
+选择的通道: Fp1, Fp2, F3, F4, F7, F8, T7, T8, C3, C4, P3, P4, O1, O2
+通道数量: 14
+正在加载DEAP test 数据集...
+DEAP test 数据集加载完成:
+  - 样本数: 7440
+  - 数据形状: (7440, 14, 256)
+  - 使用通道数: 14
+  - 标签分布: [2759 4681]
+  - 数据已标准化
+已更新模型输入通道数为: 14
+	iters: 100, epoch: 1 | loss: 0.6784935
+	  - Classification: 0.6784935
+	  - Domain: 1.7755710
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.3338394
+	  - Alpha: 0.0000
+	speed: 0.2685s/iter; left time: 492.8994s
+	iters: 200, epoch: 1 | loss: 0.7063362
+	  - Classification: 0.7063362
+	  - Domain: 1.7821162
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.3934402
+	  - Alpha: 0.0000
+	speed: 0.2615s/iter; left time: 453.8851s
+	iters: 300, epoch: 1 | loss: 0.6837392
+	  - Classification: 0.6837392
+	  - Domain: 1.7846193
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.4166517
+	  - Alpha: 0.0000
+	speed: 0.2614s/iter; left time: 427.7003s
+Epoch: 1 cost time: 101.92332577705383
+Epoch: 1, Steps: 387 | Train Loss: 0.7151738 Vali Loss: 0.6917805 Test Loss: 0.6899927
+Vali Accuracy: 0.5587 Test Accuracy: 0.6292
+Validation metric increased (-inf --> 0.558728). Saving model ...
+	iters: 100, epoch: 2 | loss: 0.6654893
+	  - Classification: 0.6654893
+	  - Domain: 1.7938440
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.5179958
+	  - Alpha: 0.0000
+	speed: 0.7135s/iter; left time: 1033.8951s
+	iters: 200, epoch: 2 | loss: 0.6832563
+	  - Classification: 0.6832563
+	  - Domain: 1.7977586
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.5412350
+	  - Alpha: 0.0000
+	speed: 0.2614s/iter; left time: 352.6315s
+	iters: 300, epoch: 2 | loss: 0.6911764
+	  - Classification: 0.6911764
+	  - Domain: 1.8002476
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.5648441
+	  - Alpha: 0.0000
+	speed: 0.2615s/iter; left time: 326.6179s
+Epoch: 2 cost time: 101.47857451438904
+Epoch: 2, Steps: 387 | Train Loss: 0.6926334 Vali Loss: 0.6886926 Test Loss: 0.6815666
+Vali Accuracy: 0.5581 Test Accuracy: 0.6292
+EarlyStopping counter: 1 out of 15
+	iters: 100, epoch: 3 | loss: 0.6847528
+	  - Classification: 0.6847528
+	  - Domain: 1.8042330
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.6036224
+	  - Alpha: 0.0000
+	speed: 0.7043s/iter; left time: 747.9374s
+	iters: 200, epoch: 3 | loss: 0.7135655
+	  - Classification: 0.7135655
+	  - Domain: 1.8037579
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.6108809
+	  - Alpha: 0.0000
+	speed: 0.2617s/iter; left time: 251.7122s
+	iters: 300, epoch: 3 | loss: 0.7076867
+	  - Classification: 0.7076867
+	  - Domain: 1.8023028
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.5872850
+	  - Alpha: 0.0000
+	speed: 0.2616s/iter; left time: 225.5304s
+Epoch: 3 cost time: 101.57083344459534
+Epoch: 3, Steps: 387 | Train Loss: 0.6898929 Vali Loss: 0.6866147 Test Loss: 0.6665726
+Vali Accuracy: 0.5579 Test Accuracy: 0.6292
+EarlyStopping counter: 2 out of 15
+	iters: 100, epoch: 4 | loss: 0.7001618
+	  - Classification: 0.7001618
+	  - Domain: 1.8045919
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.6284790
+	  - Alpha: 0.0000
+	speed: 0.7045s/iter; left time: 475.5504s
+	iters: 200, epoch: 4 | loss: 0.6840391
+	  - Classification: 0.6840391
+	  - Domain: 1.8051724
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.6312962
+	  - Alpha: 0.0000
+	speed: 0.2617s/iter; left time: 150.4651s
+	iters: 300, epoch: 4 | loss: 0.6736790
+	  - Classification: 0.6736790
+	  - Domain: 1.8058631
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.6512175
+	  - Alpha: 0.0000
+	speed: 0.2616s/iter; left time: 124.2724s
+Epoch: 4 cost time: 101.59484267234802
+Epoch: 4, Steps: 387 | Train Loss: 0.6897541 Vali Loss: 0.6865411 Test Loss: 0.6726250
+Vali Accuracy: 0.5585 Test Accuracy: 0.6292
+EarlyStopping counter: 3 out of 15
+	iters: 100, epoch: 5 | loss: 0.6947255
+	  - Classification: 0.6947255
+	  - Domain: 1.8058617
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.6772394
+	  - Alpha: 0.0000
+	speed: 0.7044s/iter; left time: 202.8645s
+	iters: 200, epoch: 5 | loss: 0.6919094
+	  - Classification: 0.6919094
+	  - Domain: 1.7976236
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.6066370
+	  - Alpha: 0.0000
+	speed: 0.2617s/iter; left time: 49.1906s
+	iters: 300, epoch: 5 | loss: 0.6918483
+	  - Classification: 0.6918483
+	  - Domain: 1.8048044
+	  - VQ: 0.0000000
+	  - Reconstruction: 0.0000000
+	  - Contrastive: 10.6831837
+	  - Alpha: 0.0000
+	speed: 0.2617s/iter; left time: 23.0276s
+Epoch: 5 cost time: 101.57694172859192
+Epoch: 5, Steps: 387 | Train Loss: 0.6903153 Vali Loss: 0.6862813 Test Loss: 0.6676574
+Vali Accuracy: 0.5587 Test Accuracy: 0.6292
+EarlyStopping counter: 4 out of 15
+>>>>>>>testing : DEAP_DIAG2_EEGLLM_VQ_DEAP_256_0<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+使用通道选择策略: comprehensive_emotion
+选择的通道: Fp1, Fp2, F3, F4, F7, F8, T7, T8, C3, C4, P3, P4, O1, O2
+通道数量: 14
+正在加载DEAP test 数据集...
+DEAP test 数据集加载完成:
+  - 样本数: 7440
+  - 数据形状: (7440, 14, 256)
+  - 使用通道数: 14
+  - 标签分布: [2759 4681]
+  - 数据已标准化
+已更新模型输入通道数为: 14
+test shape: (7440, 2) (7440,)
+Test Accuracy: 0.6292, Precision: 0.3959, Recall: 0.6292, F1: 0.4860
+
+诊断 v2 完成。重点看 Classification loss 有没有跌破 0.69、Vali/Test Accuracy 有没有动。
+
+# exit_status: 0
