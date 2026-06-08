@@ -1,26 +1,26 @@
 #!/bin/bash
 # =============================================================================
-# run_deap_diag.sh — 诊断脚本：隔离辅助损失，单看分类头能不能学
+# run_deap_diag.sh — 诊断 v2：最简分类通路，单看分类头能不能学
 #
-# 目的：917log.txt 里准确率钉死在多数类（val 0.5583 / test 0.6292）。怀疑是
-# 重建(~70)/对抗/对比等辅助损失淹没了分类信号(~0.17)。这里把辅助损失全部
-# 关掉/置零，只留分类(+极小的 VQ)，如果准确率开始动 → 确认是辅助损失的问题；
-# 如果还是钉死 → 问题在更底层（数据/标签/分类头/VQ 本身）。
+# 背景：v1 诊断（仅把辅助损失权重置零）准确率仍钉死在多数类，且分类 loss 全程 ≈ln2，
+# 说明分类通路根本没在学。最大嫌疑是 VQ 码本坍缩 + AdaptiveLossWeighter 干扰。
+# v2 把通路砍到最简：
+#   --no-enable_vq          关闭 VQ（直接 patch→重编程→冻结LLM→分类头）
+#   --no-use_adaptive_loss  绕过自适应加权，直接用裸 CrossEntropy
+#   --domain_weight 0 --contrastive_weight 0   辅助损失置零
+#   batch_size 64           A100 上 batch 8 严重欠载，加大提速且梯度更稳
+#   train_epochs 5          快速看趋势；分类 loss 若要降，1~2 个 epoch 就能看出来
 #
-# 与 run_deap_vq.sh 的区别：
-#   - 不传 --enable_reconstruction        （重建关闭）
-#   - --domain_weight 0.0                 （域对抗置零）
-#   - --contrastive_weight 0.0            （对比学习置零）
-#   - --loss CrossEntropyLoss             （先用标准 CE，排除 focal 的干扰）
-#   注：--enable_vq / --enable_adversarial 是 store_true 且 default=True，
-#       CLI 无法关闭；这里靠把权重置零来等效隔离。VQ loss 极小，保留无妨。
+# 判读：
+#   分类 loss 跌破 0.69 / 准确率开始动 → 确认是 VQ/加权机制的锅，再逐个加回来
+#   仍然平 → 问题在"重编程→冻结LLM→分类头"骨架本身，下一步动学习率/架构
 # =============================================================================
-echo "=== EEGLLM_VQ 诊断：纯分类（辅助损失置零）==="
+echo "=== EEGLLM_VQ 诊断 v2：关 VQ + 裸 CE，最简分类通路 ==="
 
-MODEL_ID="DEAP_DIAG"
+MODEL_ID="DEAP_DIAG2"
 MODEL="EEGLLM_VQ"
 DATA="DEAP"
-ROOT_PATH="/content/drive/MyDrive/DEAP/"   # Colab 路径，按实际改
+ROOT_PATH="/content/drive/MyDrive/DEAP/"   # Colab 路径
 SEQ_LEN=256
 N_CLASS=2
 CLASSIFICATION_TYPE="valence"
@@ -45,17 +45,15 @@ python run_main_with_reconstruction.py \
     --llm_layers 2 \
     --patch_len 16 \
     --stride 8 \
-    --enable_vq \
-    --vq_embed_dim 64 \
-    --vq_n_embed 1024 \
-    --vq_beta 0.25 \
+    --no-enable_vq \
+    --no-use_adaptive_loss \
     --domain_weight 0.0 \
     --contrastive_weight 0.0 \
     --alpha_schedule constant \
     --max_alpha 0.0 \
     --channel_selection comprehensive_emotion \
-    --train_epochs 20 \
-    --batch_size 8 \
+    --train_epochs 5 \
+    --batch_size 64 \
     --patience 15 \
     --learning_rate 0.0001 \
     --loss CrossEntropyLoss \
@@ -64,6 +62,4 @@ python run_main_with_reconstruction.py \
     --gpu 0
 
 echo ""
-echo "诊断完成。看 Vali/Test Accuracy 是否随 epoch 变化："
-echo "  - 开始动  → 确认是辅助损失淹没分类，回到 run_deap_vq.sh 调权重即可"
-echo "  - 仍钉死  → 问题在数据/标签/分类头/VQ，需要进一步查"
+echo "诊断 v2 完成。重点看 Classification loss 有没有跌破 0.69、Vali/Test Accuracy 有没有动。"

@@ -121,7 +121,15 @@ class Exp_Classification_VQ:
             alpha = self.args.max_alpha
         
         return alpha
-    
+
+    def _combine_losses(self, losses):
+        """组合多任务损失。默认用 AdaptiveLossWeighter；--no-use_adaptive_loss 时直接对其中的
+        张量损失求和（诊断用，避免 log_var 项把总 loss 拖成负数、与分类好坏脱钩）。"""
+        if getattr(self.args, 'use_adaptive_loss', True):
+            return self.adaptive_weighter(losses)
+        total = sum(l for l in losses if torch.is_tensor(l))
+        return total, None
+
     def vali(self, vali_data, vali_loader, criterion):
         """验证函数"""
         total_loss = []
@@ -159,7 +167,7 @@ class Exp_Classification_VQ:
                     loss_dict.get('contrastive_loss', 0) * getattr(self.args, 'contrastive_weight', 0.1)
                 ]
                 
-                total_weighted_loss, _ = self.adaptive_weighter(losses)
+                total_weighted_loss, _ = self._combine_losses(losses)
                 total_loss.append(total_weighted_loss.item())
                 
                 preds.append(pred)
@@ -245,7 +253,7 @@ class Exp_Classification_VQ:
                             loss_dict.get('contrastive_loss', 0) * getattr(self.args, 'contrastive_weight', 0.1)
                         ]
                         
-                        loss, weights = self.adaptive_weighter(losses)
+                        loss, weights = self._combine_losses(losses)
                     
                     scaler.scale(loss).backward()
                     scaler.step(model_optim)
@@ -269,7 +277,7 @@ class Exp_Classification_VQ:
                         loss_dict.get('contrastive_loss', 0) * getattr(self.args, 'contrastive_weight', 0.1)
                     ]
                     
-                    loss, weights = self.adaptive_weighter(losses)
+                    loss, weights = self._combine_losses(losses)
                     
                     loss.backward()
                     model_optim.step()

@@ -87,20 +87,20 @@ parser.add_argument('--patch_len', type=int, default=16, help='patch length')
 parser.add_argument('--stride', type=int, default=8, help='stride for patching')
 
 # VQ配置
-parser.add_argument('--enable_vq', action='store_true', default=True, help='enable vector quantization')
+parser.add_argument('--enable_vq', action=argparse.BooleanOptionalAction, default=True, help='启用向量量化（--enable_vq / --no-enable_vq）')
 parser.add_argument('--vq_embed_dim', type=int, default=128, help='VQ embedding dimension')
 parser.add_argument('--vq_n_embed', type=int, default=8192, help='VQ codebook size')
 parser.add_argument('--vq_beta', type=float, default=1.0, help='VQ beta parameter')
 
 # 重建损失配置
-parser.add_argument('--enable_reconstruction', action='store_true', default=False, help='enable reconstruction loss')
+parser.add_argument('--enable_reconstruction', action=argparse.BooleanOptionalAction, default=False, help='启用重建损失（--enable_reconstruction / --no-enable_reconstruction）')
 parser.add_argument('--use_smooth_l1', action='store_true', default=False, help='use smooth L1 loss for reconstruction')
 parser.add_argument('--freq_weight', type=float, default=1.0, help='weight for frequency domain reconstruction loss')
 parser.add_argument('--raw_weight', type=float, default=1.0, help='weight for time domain reconstruction loss')
 parser.add_argument('--reconstruction_weight', type=float, default=0.5, help='overall weight for reconstruction loss')
 
 # 模态对抗学习配置（增强版）
-parser.add_argument('--enable_adversarial', action='store_true', default=True, help='enable domain adversarial learning')
+parser.add_argument('--enable_adversarial', action=argparse.BooleanOptionalAction, default=True, help='启用域对抗学习（--enable_adversarial / --no-enable_adversarial）')
 parser.add_argument('--domain_weight', type=float, default=0.1, help='weight for domain adversarial loss')
 parser.add_argument('--contrastive_weight', type=float, default=0.1, help='weight for modal contrastive learning loss')
 parser.add_argument('--contrastive_temp', type=float, default=0.1, help='temperature for contrastive learning')
@@ -116,6 +116,8 @@ parser.add_argument('--patience', type=int, default=15, help='early stopping pat
 parser.add_argument('--learning_rate', type=float, default=0.0001, help='optimizer learning rate')
 parser.add_argument('--des', type=str, default='Exp', help='exp description')
 parser.add_argument('--loss', type=str, default='CrossEntropyLoss', help='loss function')
+parser.add_argument('--use_adaptive_loss', action=argparse.BooleanOptionalAction, default=True,
+                    help='用 AdaptiveLossWeighter 组合多损失；--no-use_adaptive_loss 时直接对各损失求和（诊断用，避免 log_var 项干扰）')
 parser.add_argument('--lradj', type=str, default='type1', help='adjust learning rate')
 parser.add_argument('--use_amp', action='store_true', help='use automatic mixed precision training', default=False)
 
@@ -126,7 +128,7 @@ parser.add_argument('--classification_type', type=str, default='valence', help='
 # EEG数据配置
 parser.add_argument('--channel_selection', type=str, default='comprehensive_emotion',
                     help='channel selection strategy: comprehensive_emotion, valence_specific, arousal_specific, custom_12_channels, auto')
-parser.add_argument('--use_channel_selection', action='store_true', default=True, help='whether to use channel selection')
+parser.add_argument('--use_channel_selection', action=argparse.BooleanOptionalAction, default=True, help='是否做通道选择（--use_channel_selection / --no-use_channel_selection）')
 
 # GPU配置
 parser.add_argument('--use_gpu', type=bool, default=True, help='use gpu')
