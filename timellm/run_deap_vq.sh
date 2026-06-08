@@ -13,7 +13,7 @@ echo ""
 MODEL_ID="DEAP_EEGLLM_VQ"
 MODEL="EEGLLM_VQ"
 DATA="DEAP"
-ROOT_PATH="/root/autodl-tmp/data_preprocessed_python/"
+ROOT_PATH="/content/drive/MyDrive/DEAP/"
 SEQ_LEN=256
 N_CLASS=2
 CLASSIFICATION_TYPE="valence"
