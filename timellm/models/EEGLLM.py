@@ -14,9 +14,8 @@ from layers.Embed import PatchEmbedding
 from layers.StandardNorm import Normalize
 import transformers
 
-# 设置Hugging Face镜像
-os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
-os.environ["HUGGINGFACE_HUB_CACHE"] = "/root/.cache/huggingface"
+# HF 端点默认走 huggingface.co（Colab 可直连）；如需镜像在运行环境 export HF_ENDPOINT，不在代码里硬编码
+os.environ.setdefault("HUGGINGFACE_HUB_CACHE", "/root/.cache/huggingface")
 
 transformers.logging.set_verbosity_error()
 

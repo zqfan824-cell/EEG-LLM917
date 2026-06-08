@@ -6,9 +6,8 @@ EEGLLM 训练脚本
 import os
 import sys
 
-# 设置Hugging Face镜像（在导入其他模块之前）
-os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
-os.environ["HUGGINGFACE_HUB_CACHE"] = "/root/.cache/huggingface"
+# HF 端点默认走 huggingface.co（Colab 可直连）；如需镜像在运行环境 export HF_ENDPOINT，不在代码里硬编码
+os.environ.setdefault("HUGGINGFACE_HUB_CACHE", "/root/.cache/huggingface")
 
 import argparse
 import time
